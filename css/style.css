@@ -1,4 +1,21 @@
 
+html{
+	margin: 0;
+	padding: 0;
+}
+
+body{
+	font-family: 'Open Sans', sans-serif;
+	line-height: 1.88889;
+	color: #555753;
+}
+
+header {
+width:100%;
+margin-top:5%;
+margin-left: 3%;
+}
+
 h1{
 	font-family: 'Playfair Display', serif;
 	font-weight: 400;
@@ -6,7 +23,7 @@ h1{
 
 p{
 	font-family: 'Open Sans', sans-serif; 
-	font-size: 10pt;
+	font-size: 9.5pt;
 }
 
 a{
@@ -19,3 +36,20 @@ a:hover {
 	color: #666;
 }
 
+#sideNav{
+	width:200px;
+	float: left;
+}
+
+ul#main-nav{
+	list-style-type:none;
+}
+
+ul#main-nav li{
+	text-align:right !important;
+}
+
+ul#main-nav li a{
+	font-family: 'Open Sans', serif;
+	font-size: 10pt;
+}
