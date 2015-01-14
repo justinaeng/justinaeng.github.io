@@ -6,7 +6,6 @@ html{
 
 body{
 	font-family: 'Open Sans', sans-serif;
-	line-height: 1.88889;
 	color: #555753;
 }
 
@@ -19,6 +18,16 @@ margin-left: 3%;
 h1{
 	font-family: 'Playfair Display', serif;
 	font-weight: 400;
+}
+
+h1#name-logo{
+	text-align: right;
+}
+
+h3{
+	font-family: 'Playfair Display', serif;
+	font-weight: 400;
+	margin-bottom:0px;
 }
 
 p{
@@ -41,15 +50,22 @@ a:hover {
 	float: left;
 }
 
-ul#main-nav{
+ul{
 	list-style-type:none;
 }
 
 ul#main-nav li{
 	text-align:right !important;
+	line-height: 1.85em;
 }
 
 ul#main-nav li a{
 	font-family: 'Open Sans', serif;
 	font-size: 10pt;
+}
+
+#resume-block{
+display:inline-block;
+margin-top:5%;
+margin-left:80px; 
 }
