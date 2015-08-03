@@ -65,7 +65,14 @@ margin: 0 auto;
 }
 
 
-
+#temp-intro{
+	width: 50%;
+    margin: 0 auto;
+	margin-top:2%;
+	margin-bottom:2%; 
+	padding-bottom:2%;
+	text-align:center;
+}
 
 
 body {
