@@ -1,0 +1,744 @@
+/* ─────────────────────────────────────────────────────────────
+   Justina — Shopify POs Case Study
+   Type: Inter (body/UI) + Fraunces (display display substitute)
+   Maison Neue is the source font — using Inter as a close web-safe
+   neighbor for body/UI; all sizes and weights preserved from Figma.
+   ───────────────────────────────────────────────────────────── */
+
+:root {
+  --ink: rgb(45, 41, 45);
+  --ink-soft: rgb(74, 74, 74);
+  --paper: #ffffff;
+  --paper-warm: rgb(255, 254, 248);
+  --paper-cool: rgb(247, 247, 247);
+  --paper-blue: rgb(235, 244, 255);
+  --paper-aqua: rgba(224, 255, 251, 0.4);
+  --paper-mint: rgb(240, 255, 246);
+  --accent-yellow: rgb(242, 220, 91);
+  --accent-green: rgb(4, 253, 83);
+  --accent-magenta: rgba(250, 1, 255, 0.15);
+  --rule: rgb(45, 41, 45);
+  --rule-soft: rgb(227, 227, 227);
+  --muted: rgb(178, 178, 178);
+
+  --shadow-card: 0 3px 12px 1px rgba(38, 38, 38, 0.1),
+                 0 3px 3px 1px rgba(38, 38, 38, 0.05);
+  --shadow-image: 0 2px 2px 0 rgba(38, 38, 38, 0.05),
+                  0 2px 6px 0 rgba(38, 38, 38, 0.1);
+  --shadow-inset: 0 3px 1px -1px rgba(26, 26, 26, 0.07),
+                  inset 0 1px 0 0 rgba(204, 204, 204, 0.5),
+                  inset 0 -1px 0 0 rgba(0, 0, 0, 0.17),
+                  inset -1px 0 0 0 rgba(0, 0, 0, 0.13),
+                  inset 1px 0 0 0 rgba(0, 0, 0, 0.13);
+  --shadow-soft: 0 1px 4px 0 rgba(12, 12, 13, 0.05);
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: "Inter", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+img { display: block; max-width: 100%; }
+
+a { color: inherit; text-decoration: none; }
+
+/* ── Nav ─────────────────────────────────────────────────── */
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 32px;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: saturate(1.2) blur(10px);
+  -webkit-backdrop-filter: saturate(1.2) blur(10px);
+  border-bottom: 1px solid transparent;
+}
+.nav__home {
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 24px;
+  position: relative;
+}
+.nav__home::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -2px;
+  border-bottom: 1px dashed var(--ink);
+}
+.nav__arrows {
+  display: flex;
+  gap: 20px;
+  font-size: 16px;
+  color: var(--ink);
+}
+.nav__arrows a { display: inline-flex; align-items: center; gap: 6px; }
+.nav__arrows .sep { color: var(--muted); }
+
+/* ── Frame container ─────────────────────────────────────── */
+.frame {
+  width: 100%;
+  margin: 0 auto;
+}
+.frame--full { padding: 0; }
+
+/* ── Sections ────────────────────────────────────────────── */
+.section {
+  width: 100%;
+  padding: 88px 98px 108px;
+}
+.section--white { background: var(--paper); }
+.section--warm { background: var(--paper-warm); }
+.section--cool { background: var(--paper-cool); }
+.section--aqua { background: var(--paper-aqua); }
+.section--mint { background: var(--paper-mint); }
+
+.container {
+  max-width: 1242px;
+  margin: 0 auto;
+}
+
+/* ── Headline eyebrow (underlined section label) ─────────── */
+.eyebrow {
+  border-bottom: 1px solid var(--rule);
+  padding: 0 0 8px 0;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: 0;
+  color: var(--ink);
+  display: block;
+  margin: 0 0 32px;
+}
+
+/* ── Hero ────────────────────────────────────────────────── */
+.hero {
+  padding: 136px 173px;
+  background: var(--paper);
+}
+.hero__copy {
+  max-width: 1027px;
+  font-family: "Fraunces", "Maison Neue", "Inter", serif;
+  font-weight: 400;
+  font-size: 56px;
+  line-height: 72px;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+  text-wrap: pretty;
+}
+
+.hero-image {
+  margin: 0 32px 0;
+  box-shadow: var(--shadow-image);
+  background: var(--paper);
+  aspect-ratio: 1376 / 978;
+  width: calc(100% - 64px);
+  background-size: cover;
+  background-position: center;
+}
+
+/* ── Project description ─────────────────────────────────── */
+.project-desc {
+  padding: 136px 242px;
+  background: var(--paper);
+}
+.project-desc__grid {
+  display: grid;
+  grid-template-columns: 261px 1fr;
+  gap: 40px;
+}
+.project-desc__meta {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+.meta-block__title {
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 24px;
+  margin: 0;
+}
+.meta-block__value {
+  font-size: 18px;
+  line-height: 24px;
+  margin: 0;
+}
+.project-desc__copy {
+  font-family: "Fraunces", "Maison Neue", serif;
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 36px;
+  color: var(--ink);
+  text-wrap: pretty;
+  max-width: 678px;
+}
+
+/* ── Big centered "thesis" slab ──────────────────────────── */
+.thesis {
+  padding: 136px 174px 160px;
+  background: var(--paper);
+  text-align: center;
+}
+.thesis__copy {
+  font-family: "Fraunces", "Maison Neue", serif;
+  font-weight: 400;
+  font-size: 44px;
+  line-height: 60px;
+  max-width: 1027px;
+  margin: 0 auto;
+  text-wrap: pretty;
+  letter-spacing: -0.005em;
+}
+.thesis--left .thesis__copy { text-align: left; }
+
+/* ── UX research band (asymmetric two-col) ───────────────── */
+.uxr-intro {
+  padding: 136px 174px 100px;
+  background: var(--paper);
+}
+.uxr-intro__grid {
+  display: grid;
+  grid-template-columns: 162px 1fr;
+  gap: 137px;
+  max-width: 977px;
+  margin: 0 auto;
+}
+.uxr-intro__copy {
+  font-family: "Fraunces", "Maison Neue", serif;
+  font-size: 24px;
+  line-height: 36px;
+  max-width: 678px;
+  text-wrap: pretty;
+}
+
+/* ── Flow / step cards ───────────────────────────────────── */
+.stepgrid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 16px;
+}
+.step {
+  background: var(--paper);
+  border-radius: 8px;
+  box-shadow: var(--shadow-card);
+  padding: 20px 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  min-height: 206px;
+}
+.step__icon {
+  width: 91px;
+  height: 96px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ink);
+}
+.step__icon svg { width: 100%; height: 100%; }
+.step__title {
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 20px;
+  margin: 0;
+  text-align: center;
+}
+.step__hint {
+  font-size: 15px;
+  line-height: 18px;
+  text-align: center;
+  color: var(--ink);
+  margin: 0;
+}
+
+/* ── JTBD cards ──────────────────────────────────────────── */
+.jtbdgrid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 16px;
+}
+.jtbd {
+  background: var(--paper);
+  border-radius: 8px;
+  box-shadow: var(--shadow-soft);
+  padding: 20px 24px;
+  min-height: 136px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.jtbd__want {
+  font-family: "JetBrains Mono", "Maison Neue Mono", ui-monospace, monospace;
+  font-size: 12px;
+  line-height: 16px;
+  color: var(--ink);
+}
+.jtbd hr {
+  margin: 6px 0;
+  border: 0;
+  border-top: 1px solid var(--muted);
+  width: 16px;
+}
+.jtbd__so {
+  font-family: "JetBrains Mono", "Maison Neue Mono", ui-monospace, monospace;
+  font-weight: 700;
+  font-style: italic;
+  font-size: 12px;
+  line-height: 16px;
+  color: var(--ink);
+}
+
+/* ── Themes (3 cards) ────────────────────────────────────── */
+.themegrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-bottom: 60px;
+}
+.theme-card {
+  border-radius: 8px;
+  padding: 24px;
+  min-height: 252px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.theme-card__header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.theme-card__icon {
+  width: 20px;
+  height: 20px;
+  color: var(--ink);
+}
+.theme-card__title {
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 24px;
+  margin: 0;
+}
+.theme-card__body {
+  font-size: 18px;
+  line-height: 26px;
+  margin: 0;
+  text-wrap: pretty;
+}
+
+/* ── Solutions (3 cols × 2 stacked pain cards) ────────────── */
+.solutiongrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+}
+.solution-col {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.painpoint {
+  border-radius: 8px;
+  padding: 16px 24px;
+  min-height: 92px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.painpoint__text {
+  font-size: 18px;
+  line-height: 24px;
+  margin: 0;
+  text-wrap: pretty;
+}
+.painpoint__meters {
+  display: flex;
+  gap: 40px;
+  align-items: center;
+}
+.meter {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 16px;
+  font-weight: 500;
+}
+.meter__bar {
+  display: flex;
+  gap: 3px;
+}
+.meter__seg {
+  width: 20px;
+  height: 4px;
+  background: var(--rule-soft);
+  border-radius: 1px;
+}
+.meter__seg.on { background: var(--ink); }
+
+/* ── Current state / image grid ──────────────────────────── */
+.currentstate {
+  background: var(--paper-cool);
+  padding: 88px 32px 108px;
+}
+.currentstate__label {
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 24px;
+  margin: 0 0 40px;
+}
+.currentstate__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+}
+.currentstate__shot {
+  width: 100%;
+  aspect-ratio: 678 / 579;
+  background-size: cover;
+  background-position: top center;
+  background-repeat: no-repeat;
+  background-color: var(--paper);
+  border: 1px solid var(--rule-soft);
+}
+.currentstate__caption h4 {
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 20px;
+  margin: 24px 0 12px;
+}
+.currentstate__caption ul {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 28px;
+}
+
+/* ── Vision / solution sections with screen + callouts ───── */
+.vision {
+  padding: 100px 99px;
+  position: relative;
+}
+.vision__header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+.vision__header-icon {
+  width: 20px;
+  height: 20px;
+  color: var(--ink);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.vision__header-title {
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 24px;
+  margin: 0;
+}
+.vision__lede {
+  font-size: 16px;
+  line-height: 22px;
+  margin: 0 0 40px;
+  max-width: 999px;
+}
+
+.vision__block {
+  display: grid;
+  grid-template-columns: minmax(0, 960px) 260px;
+  gap: 68px;
+  align-items: start;
+  margin-bottom: 80px;
+}
+.vision__block:last-child { margin-bottom: 0; }
+.vision__shot {
+  width: 100%;
+  border-radius: 20px;
+  background-size: cover;
+  background-position: center top;
+  background-color: var(--paper);
+  aspect-ratio: 960 / 683;
+  box-shadow: var(--shadow-image);
+}
+.vision__shot--tall { aspect-ratio: 960 / 819; }
+.vision__callouts {
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+  padding-top: 72px;
+}
+.callout__title {
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 20px;
+  margin: 0 0 12px;
+}
+.callout__body {
+  font-size: 16px;
+  line-height: 22px;
+  margin: 0;
+  color: var(--ink);
+  text-wrap: pretty;
+}
+
+/* ── Reduce duplicative actions (three 'email' shots) ───── */
+.reduce {
+  background: var(--paper);
+  padding: 96px 32px;
+}
+.reduce__header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 40px;
+}
+.reduce__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  align-items: end;
+}
+.reduce__shot {
+  width: 100%;
+  aspect-ratio: 445 / 380;
+  background-size: cover;
+  background-position: top center;
+  background-color: var(--paper);
+  border-radius: 8px;
+  box-shadow: var(--shadow-image);
+  position: relative;
+  border: 1px solid var(--rule-soft);
+}
+.reduce__cursor {
+  position: absolute;
+  width: 24px;
+  height: 32px;
+  pointer-events: none;
+}
+.reduce__cursor::before {
+  content: "";
+  position: absolute;
+  left: 0; top: 0;
+  width: 24px; height: 24px;
+  border-radius: 50%;
+  background: var(--accent-magenta);
+}
+.reduce__cursor svg {
+  position: absolute;
+  left: 12px; top: 13px;
+  width: 12px; height: 19px;
+}
+.reduce__captions {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin-top: 32px;
+}
+.reduce__caption-num {
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 20px;
+  margin: 0 0 12px;
+}
+.reduce__caption-body {
+  font-size: 16px;
+  line-height: 22px;
+  margin: 0;
+  max-width: 420px;
+}
+
+/* ── Cost summary sub-section ────────────────────────────── */
+.costsummary {
+  margin-top: 24px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 329px;
+  gap: 40px;
+  align-items: start;
+}
+.costsummary__cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+.costsummary__card {
+  width: 100%;
+  aspect-ratio: 390 / 190;
+  background-size: cover;
+  background-position: center;
+  border-radius: 8px;
+  background-color: var(--paper);
+  border: 1px solid var(--rule-soft);
+}
+.costsummary__callouts {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+/* ── Next steps ──────────────────────────────────────────── */
+.nextsteps {
+  background: var(--paper);
+  padding: 136px 242px;
+}
+.nextsteps__grid {
+  display: grid;
+  grid-template-columns: 261px 1fr;
+  gap: 40px;
+}
+.nextsteps__copy {
+  font-family: "Fraunces", "Maison Neue", serif;
+  font-size: 24px;
+  line-height: 36px;
+  max-width: 678px;
+  text-wrap: pretty;
+}
+
+/* ── API / Email discovery ──────────────────────────────── */
+.api {
+  background: var(--paper-warm);
+  padding: 128px 119px;
+}
+.api__grid {
+  display: grid;
+  grid-template-columns: 590px 1fr;
+  gap: 108px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+.api__shot {
+  width: 590px;
+  height: 369px;
+  border-radius: 8px;
+  background-size: cover;
+  background-position: top center;
+  box-shadow: var(--shadow-inset);
+}
+.api__copy h4 {
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 20px;
+  margin: 0 0 12px;
+}
+.api__copy p {
+  font-size: 16px;
+  line-height: 22px;
+  margin: 0;
+  text-wrap: pretty;
+  white-space: pre-line;
+}
+
+/* ── Team ────────────────────────────────────────────────── */
+.team {
+  padding: 100px 98px;
+}
+.team__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 40px;
+}
+.team-block__title {
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 24px;
+  margin: 0 0 4px;
+}
+.team-block__body {
+  font-size: 18px;
+  line-height: 24px;
+  margin: 0;
+  white-space: pre-line;
+}
+
+/* ── Next project nav ────────────────────────────────────── */
+.projectnav {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+.projectnav__card {
+  height: 121px;
+  padding: 0 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  overflow: hidden;
+  position: relative;
+  background-size: cover;
+  background-position: center;
+}
+.projectnav__card--first {
+  background-image: linear-gradient(90deg, rgba(255,255,255,0.78), rgba(255,255,255,0.55)),
+                    url(./assets/next-project-bg.png);
+}
+.projectnav__card--second {
+  background-color: var(--accent-green);
+}
+.projectnav__title {
+  font-weight: 700;
+  font-size: 36px;
+  line-height: 52px;
+  letter-spacing: -0.005em;
+  margin: 0;
+}
+.projectnav__cta {
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 32px;
+  position: relative;
+}
+.projectnav__cta::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; bottom: -4px;
+  border-bottom: 1px dashed var(--ink);
+}
+
+/* ── Arrows between screens and callouts (visual affordance) */
+.connector {
+  position: absolute;
+  border-top: 1.5px solid var(--ink);
+  pointer-events: none;
+}
+.connector::after {
+  content: "";
+  position: absolute;
+  right: -6px; top: -5px;
+  border: 5px solid transparent;
+  border-left-color: var(--ink);
+}
+
+/* ── Footer spacer ─────────────────────────────────────── */
+.footer {
+  padding: 40px 32px;
+  font-size: 12px;
+  color: var(--ink-soft);
+  text-align: center;
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+/* subtle fade-in on scroll */
+@media (prefers-reduced-motion: no-preference) {
+  .reveal { opacity: 0; transform: translateY(8px); transition: opacity 700ms ease, transform 700ms ease; }
+  .reveal.is-visible { opacity: 1; transform: none; }
+}
