@@ -8,11 +8,11 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,700;1,700&display=swap" rel="stylesheet">
 <style>
-/* ─────────────────────────────────────────────────────────────
+/* ──
    Justina — Shopify POs Case Study
    Type: Maison Neue (self-hosted) per the Figma file.
    Weights used: Book 400 / Medium 500 / Demi 600 / Bold 700.
-   ───────────────────────────────────────────────────────────── */
+   ── */
 
 @font-face {
   font-family: "Maison Neue";
@@ -103,7 +103,7 @@ img { display: block; max-width: 100%; }
 
 a { color: inherit; text-decoration: none; }
 
-/* ── Nav ─────────────────────────────────────────────────── */
+/* ── Nav ── */
 .nav {
   position: sticky;
   top: 0;
@@ -141,14 +141,14 @@ a { color: inherit; text-decoration: none; }
 .nav__arrows a { display: inline-flex; align-items: center; gap: 6px; }
 .nav__arrows .sep { color: var(--muted); }
 
-/* ── Frame container ─────────────────────────────────────── */
+/* ── Frame container ── */
 .frame {
   width: 100%;
   margin: 0 auto;
 }
 .frame--full { padding: 0; }
 
-/* ── Sections ────────────────────────────────────────────── */
+/* ── Sections ── */
 /* Every top-level section sits inside the same 1376w content frame */
 /* with 32px outer margins, regardless of internal vertical rhythm. */
 .section {
@@ -168,7 +168,7 @@ a { color: inherit; text-decoration: none; }
   margin: 0 auto;
 }
 
-/* ── Headline eyebrow (underlined section label) ─────────── */
+/* ── Headline eyebrow (underlined section label) ── */
 .eyebrow {
   border-bottom: 1px solid var(--rule);
   padding: 0 0 8px 0;
@@ -181,7 +181,7 @@ a { color: inherit; text-decoration: none; }
   margin: 0 0 32px;
 }
 
-/* ── Hero ────────────────────────────────────────────────── */
+/* ── Hero ── */
 /* Figma: 1376w (left:32), padding 136px 173px; copy 1027x288 @ 56/72 */
 .hero {
   padding: 136px 173px;
@@ -209,7 +209,7 @@ a { color: inherit; text-decoration: none; }
   width: calc(100% - 64px);
 }
 
-/* ── Project description ─────────────────────────────────── */
+/* ── Project description ── */
 /* Figma: 1440w, padding 136px 259px 136px 242px; inner 939w */
 /*        meta col 155w, gap 106px, copy 678w @ 24/36 */
 .project-desc {
@@ -251,7 +251,7 @@ a { color: inherit; text-decoration: none; }
   margin: 0;
 }
 
-/* ── Big centered "thesis" slab ──────────────────────────── */
+/* ── Big centered "thesis" slab ── */
 /* Figma: 1375w (left:32.5), padding 136px 174px 160px; copy 1027w @ 44/60 */
 .thesis {
   padding: 136px 174px 160px;
@@ -272,7 +272,7 @@ a { color: inherit; text-decoration: none; }
 }
 .thesis--left .thesis__copy { text-align: left; }
 
-/* ── UX research band (asymmetric two-col) ───────────────── */
+/* ── UX research band (asymmetric two-col) ── */
 /* Figma: 1325w (left:57.5), padding 136px 174px 100px; inner 977w */
 /*        meta 162w, gap 137px, copy 678w @ 24/36 */
 .uxr-intro {
@@ -297,7 +297,7 @@ a { color: inherit; text-decoration: none; }
   text-wrap: pretty;
 }
 
-/* ── Flow / step cards ───────────────────────────────────── */
+/* ── Flow / step cards ── */
 .stepgrid {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
@@ -338,7 +338,7 @@ a { color: inherit; text-decoration: none; }
   margin: 0;
 }
 
-/* ── JTBD cards ──────────────────────────────────────────── */
+/* ── JTBD cards ── */
 .jtbdgrid {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
@@ -375,7 +375,7 @@ a { color: inherit; text-decoration: none; }
   color: var(--ink);
 }
 
-/* ── Themes (3 cards) ────────────────────────────────────── */
+/* ── Themes (3 cards) ── */
 .themegrid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -413,7 +413,7 @@ a { color: inherit; text-decoration: none; }
   text-wrap: pretty;
 }
 
-/* ── Solutions (3 cols × 2 stacked pain cards) ────────────── */
+/* ── Solutions (3 cols × 2 stacked pain cards) ── */
 .solutiongrid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -462,7 +462,7 @@ a { color: inherit; text-decoration: none; }
 }
 .meter__seg.on { background: var(--ink); }
 
-/* ── Current state / image grid ──────────────────────────── */
+/* ── Current state / image grid ── */
 .currentstate {
   background: var(--paper-cool);
   padding: 88px 32px 108px;
@@ -502,7 +502,7 @@ a { color: inherit; text-decoration: none; }
   line-height: 28px;
 }
 
-/* ── Vision / solution sections with screen + callouts ───── */
+/* ── Vision / solution sections with screen + callouts ── */
 .vision {
   padding: 100px 99px;
   position: relative;
@@ -572,7 +572,7 @@ a { color: inherit; text-decoration: none; }
   text-wrap: pretty;
 }
 
-/* ── Reduce duplicative actions (three 'email' shots) ───── */
+/* ── Reduce duplicative actions (three 'email' shots) ── */
 .reduce {
   background: var(--paper);
   padding: 96px 32px;
@@ -638,7 +638,7 @@ a { color: inherit; text-decoration: none; }
   max-width: 420px;
 }
 
-/* ── Cost summary sub-section ────────────────────────────── */
+/* ── Cost summary sub-section ── */
 .costsummary {
   margin-top: 24px;
   display: grid;
@@ -666,7 +666,7 @@ a { color: inherit; text-decoration: none; }
   gap: 40px;
 }
 
-/* ── Next steps (mirrors Project Description layout) ─────── */
+/* ── Next steps (mirrors Project Description layout) ── */
 .nextsteps {
   background: var(--paper);
   padding: 136px 242px 136px 242px;
@@ -688,7 +688,7 @@ a { color: inherit; text-decoration: none; }
   text-wrap: pretty;
 }
 
-/* ── API / Email discovery ──────────────────────────────── */
+/* ── API / Email discovery ── */
 .api {
   background: var(--paper-warm);
   padding: 128px 119px;
@@ -722,7 +722,7 @@ a { color: inherit; text-decoration: none; }
   white-space: pre-line;
 }
 
-/* ── Team ────────────────────────────────────────────────── */
+/* ── Team ── */
 .team {
   padding: 100px 98px;
 }
@@ -744,7 +744,7 @@ a { color: inherit; text-decoration: none; }
   white-space: pre-line;
 }
 
-/* ── Next project nav ────────────────────────────────────── */
+/* ── Next project nav ── */
 .projectnav {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -802,7 +802,7 @@ a { color: inherit; text-decoration: none; }
   border-left-color: var(--ink);
 }
 
-/* ── Footer spacer ─────────────────────────────────────── */
+/* ── Footer spacer ── */
 .footer {
   padding: 40px 32px;
   font-size: 12px;
@@ -824,7 +824,7 @@ a { color: inherit; text-decoration: none; }
 </head>
 <body>
 
-<!-- ── Top nav ─────────────────────────────────────────── -->
+<!-- ── Top nav ── -->
 <nav class="nav" aria-label="Primary">
   <a class="nav__home" href="index.html">Home</a>
   <div class="nav__arrows">
@@ -834,7 +834,7 @@ a { color: inherit; text-decoration: none; }
   </div>
 </nav>
 
-<!-- ── Hero ────────────────────────────────────────────── -->
+<!-- ── Hero ── -->
 <header class="hero">
   <div class="hero__inner">
   <p class="hero__copy">
@@ -845,10 +845,10 @@ a { color: inherit; text-decoration: none; }
   </div>
 </header>
 
-<!-- ── Hero image (vision comp) ─────────────────────────── -->
+<!-- ── Hero image (vision comp) ── -->
 <div class="hero-image" style="background-image:url('assets/po-hero.png')" role="img" aria-label="Purchase order vision comp"></div>
 
-<!-- ── Project description ──────────────────────────────── -->
+<!-- ── Project description ── -->
 <section class="project-desc">
   <div class="project-desc__grid">
     <aside class="project-desc__meta">
@@ -875,7 +875,7 @@ a { color: inherit; text-decoration: none; }
   </div>
 </section>
 
-<!-- ── Flow + JTBD ─────────────────────────────────────── -->
+<!-- ── Flow + JTBD ── -->
 <section class="section section--cool" style="background:rgb(245,245,245)">
   <div class="container">
     <span class="eyebrow">Purchase order flow</span>
@@ -1006,7 +1006,7 @@ a { color: inherit; text-decoration: none; }
   </div>
 </section>
 
-<!-- ── UX research intro ───────────────────────────────── -->
+<!-- ── UX research intro ── -->
 <section class="uxr-intro">
   <div class="uxr-intro__grid">
     <div>
@@ -1026,7 +1026,7 @@ a { color: inherit; text-decoration: none; }
   </div>
 </section>
 
-<!-- ── UXR themes + solutions ──────────────────────────── -->
+<!-- ── UXR themes + solutions ── -->
 <section class="section section--white">
   <div class="container">
     <span class="eyebrow">UXR themes</span>
@@ -1129,7 +1129,7 @@ a { color: inherit; text-decoration: none; }
   </div>
 </section>
 
-<!-- ── Current state ─────────────────────────────────── -->
+<!-- ── Current state ── -->
 <section class="currentstate">
   <div class="container" style="max-width:1376px">
     <p class="currentstate__label">Current state</p>
@@ -1160,7 +1160,7 @@ a { color: inherit; text-decoration: none; }
   </div>
 </section>
 
-<!-- ── Thesis slab ─────────────────────────────────── -->
+<!-- ── Thesis slab ── -->
 <section class="thesis thesis--left">
   <p class="thesis__copy">
     Drawing from these research themes, I defined solutions for the
@@ -1169,7 +1169,7 @@ a { color: inherit; text-decoration: none; }
   </p>
 </section>
 
-<!-- ── Forecasting solutions ─────────────────────────── -->
+<!-- ── Forecasting solutions ── -->
 <section class="vision section--aqua" style="background:rgba(224,255,251,0.4)">
   <div class="vision__header">
     <span class="vision__header-icon">
@@ -1204,7 +1204,7 @@ a { color: inherit; text-decoration: none; }
   </div>
 </section>
 
-<!-- ── Reduce duplicative actions ──────────────────── -->
+<!-- ── Reduce duplicative actions ── -->
 <section class="reduce">
   <div class="container" style="max-width:1376px">
     <div class="reduce__header">
@@ -1245,7 +1245,7 @@ a { color: inherit; text-decoration: none; }
   </div>
 </section>
 
-<!-- ── Financial transparency ─────────────────────── -->
+<!-- ── Financial transparency ── -->
 <section class="vision section--mint" style="background:rgb(240,255,246)">
   <div class="vision__header">
     <span class="vision__header-icon">
@@ -1295,7 +1295,7 @@ a { color: inherit; text-decoration: none; }
   </div>
 </section>
 
-<!-- ── Thesis #2 ────────────────────────────────── -->
+<!-- ── Thesis #2 ── -->
 <section class="thesis">
   <p class="thesis__copy">
     In the GSD prototype phase I would have conducted technical
@@ -1304,7 +1304,7 @@ a { color: inherit; text-decoration: none; }
   </p>
 </section>
 
-<!-- ── API / Email discovery ────────────────────── -->
+<!-- ── API / Email discovery ── -->
 <section class="api">
   <div class="api__grid">
     <div class="api__shot" style="background-image:url('./assets/gmail-screenshot.png')"></div>
@@ -1317,7 +1317,7 @@ a { color: inherit; text-decoration: none; }
   </div>
 </section>
 
-<!-- ── Next steps ─────────────────────────────── -->
+<!-- ── Next steps ── -->
 <section class="nextsteps">
   <div class="nextsteps__grid">
     <aside class="project-desc__meta">
@@ -1335,7 +1335,7 @@ a { color: inherit; text-decoration: none; }
   </div>
 </section>
 
-<!-- ── Team / credits ─────────────────────────── -->
+<!-- ── Team / credits ── -->
 <section class="team">
   <div class="team__grid">
     <div>
@@ -1354,7 +1354,7 @@ Jane Tran</p>
   </div>
 </section>
 
-<!-- ── Project nav ────────────────────────────── -->
+<!-- ── Project nav ── -->
 <nav class="projectnav" id="next">
   <a class="projectnav__card projectnav__card--first" href="compliance-hub.html">
     <h3 class="projectnav__title">Compliance integration hub</h3>
