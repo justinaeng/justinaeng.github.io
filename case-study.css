@@ -184,3 +184,13 @@ figcaption+.figrow,figcaption+.notes{margin-top:var(--sp-1)}
 /* tinted quote callout */
 .callout--quote{background:rgb(214,250,225)}
 .callout--quote p{margin:0;font-size:18px;font-style:italic;line-height:1.45}
+
+/* ── missing-asset placeholder ──
+   Mark any image block whose file is not in the repo yet:
+     class="… ph"  data-ph="filename.png"
+   The element keeps its own sizing (--ar, aspect-ratio, width) and its
+   original background-image url stays in the style attribute, so dropping
+   the real file in and deleting the `ph` class + `data-ph` restores it. */
+.ph{background-image:none!important;background-color:var(--mat);border:1px dashed rgba(45,41,45,.3);border-radius:3px;box-shadow:none;display:flex;align-items:center;justify-content:center;padding:8px;overflow:hidden}
+.ph::after{content:attr(data-ph);font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;line-height:1.35;color:var(--muted);text-align:center;word-break:break-word}
+.persona__portrait.ph::after{font-size:10px}

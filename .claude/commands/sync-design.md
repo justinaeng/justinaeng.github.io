@@ -19,9 +19,12 @@ Reconcile this repo with the Claude Design project and publish the result.
 | Live site | <https://justinaeng.github.io> — GitHub Pages serves the repo root |
 | **Source of truth** | **the repo.** The design project is a working surface. |
 
-Mirrored both ways: `index.html`, `shopify.html`, `compliance-hub.html`,
-`onboarding.html`, `product-creation.html`, `grid.css`, `styles.css`,
-`assets/**`, `src/**`.
+Mirrored both ways: `index.html`, `resume.html`, `shopify.html`,
+`compliance-hub.html`, `onboarding.html`, `product-creation.html`, `site.css`,
+`case-study.css`, `assets/**`, `src/**`.
+
+`site.css` styles the home and résumé pages; `case-study.css` styles the four
+case studies. (They replaced `grid.css` + `styles.css` in the Sep 2026 redesign.)
 
 Project-only, never sync: `uploads/`, `screenshots/`, `github.md`, `.thumbnail`
 (the first three are in `.gitignore`).
@@ -109,11 +112,14 @@ PY
 
 # Every local href/src/url() resolves to a real file.
 # Scans CSS too — stylesheets carry their own url() image refs.
+# A ref whose basename appears in a data-ph="" on the same page is a declared
+# placeholder (see "Placeholders" below), reported separately — not a defect.
 python3 - <<'PY'
-import re, os, glob
-missing = []
+import re, os, glob, sys
+broken, holding = [], []
 for p in glob.glob('*.html') + glob.glob('*.css'):
     t = open(p, encoding='utf-8').read()
+    declared = set(re.findall(r'data-ph="([^"]+)"', t))
     refs  = set(re.findall(r'(?:src|href)="([^"#][^"]*)"', t))
     refs |= set(re.findall(r'url\(["\']?([^"\')]+)', t))
     for r in refs:
@@ -121,9 +127,15 @@ for p in glob.glob('*.html') + glob.glob('*.css'):
         r = r.split('#')[0]
         if not r or r.startswith(('http', 'mailto:', 'data:', '//', '%23')):
             continue
-        if not os.path.exists(r.lstrip('./')):
-            missing.append(f"{p} -> {r}")
-print('\n'.join(sorted(set(missing))) if missing else 'all local references resolve')
+        if os.path.exists(r.lstrip('./')):
+            continue
+        (holding if os.path.basename(r) in declared else broken).append(f"{p} -> {r}")
+if holding:
+    print(f"{len(set(holding))} declared placeholder(s), awaiting the real asset:")
+    print('\n'.join('  ' + x for x in sorted(set(holding))))
+print()
+print('\n'.join(sorted(set(broken))) if broken else 'no unexpected broken references')
+sys.exit(1 if broken else 0)
 PY
 ```
 
@@ -135,7 +147,7 @@ cd /Users/justinaeng/dev/justina_portfolio
 python3 -m http.server 8899 >/dev/null 2>&1 & SRV=$!; sleep 1
 CHROME="/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
 OUT="${TMPDIR:-/tmp}/sync-design-shots"; mkdir -p "$OUT"
-for p in index shopify compliance-hub onboarding product-creation; do
+for p in index resume shopify compliance-hub onboarding product-creation; do
   "$CHROME" --headless --disable-gpu --hide-scrollbars --window-size=1440,1600 \
     --screenshot="$OUT/$p.png" --virtual-time-budget=5000 \
     "http://localhost:8899/$p.html" >/dev/null 2>&1
@@ -144,9 +156,13 @@ done
 kill $SRV 2>/dev/null; echo "screenshots in $OUT"
 ```
 
-Read the screenshots with the Read tool. Every page must be centred on the
-1040px column with 24px gutters — full-bleed text means `grid.css` is missing or
-unlinked.
+Read the screenshots with the Read tool. Home and résumé sit on a 1040px column;
+the case studies put prose in a 680px measure with figures breaking out to
+1120px. Full-bleed text means the page's stylesheet is missing or unlinked.
+
+Headless `--screenshot` ignores a `#fragment`, so it always captures from the
+top. To check something far down a page, extract that block into a small harness
+page that links the same stylesheet and shoot that instead.
 
 ## V2 — Verify the design project after pushing
 
@@ -176,3 +192,29 @@ Report what synced, what you skipped and why, and the live URL.
 When the sync changes the shape of the project (a rename, a deletion, a new
 page), update `github.md` **in the design project** — its "Last sync" block is
 what tells the next web-UI session that the repo is the source of truth.
+
+## Placeholders
+
+An asset that exists only in the design project (binaries cannot be pulled —
+constraint 4) gets a **declared placeholder** rather than a broken image:
+
+```html
+<div class="shot ph" data-ph="value-screen.png"
+     style="--ar:869/1718;background-image:url('assets/banco/value-screen.png')">
+```
+
+The `ph` class draws a dashed box with the filename centred; `.ph` sets
+`background-image:none!important`, so the original url stays in the style
+attribute untouched. **To restore the real image: drop the file into `assets/`
+and delete just the `ph` class and the `data-ph` attribute.** Nothing else
+changes. The rules live at the end of `case-study.css` and `site.css`.
+
+The two homepage tiles are `<div class="ph" data-src="…">` rather than `<img>`,
+since a broken `<img>` cannot be styled reliably; `data-src` records the src to
+put back.
+
+To find every placeholder still outstanding:
+
+```bash
+grep -rno 'data-ph="[^"]*"' *.html
+```
