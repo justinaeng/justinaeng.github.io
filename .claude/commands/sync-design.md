@@ -107,20 +107,23 @@ print('\n'.join(bad) if bad else 'guard ok: no inline images, all files under th
 sys.exit(1 if bad else 0)
 PY
 
-# Every local href/src/url() resolves to a real file
+# Every local href/src/url() resolves to a real file.
+# Scans CSS too — stylesheets carry their own url() image refs.
 python3 - <<'PY'
 import re, os, glob
 missing = []
-for p in glob.glob('*.html'):
+for p in glob.glob('*.html') + glob.glob('*.css'):
     t = open(p, encoding='utf-8').read()
     refs  = set(re.findall(r'(?:src|href)="([^"#][^"]*)"', t))
     refs |= set(re.findall(r'url\(["\']?([^"\')]+)', t))
     for r in refs:
-        if r.startswith(('http', 'mailto:', 'data:', '//', '%23')):
+        # drop the #fragment: "index.html#work" is a link to a real file
+        r = r.split('#')[0]
+        if not r or r.startswith(('http', 'mailto:', 'data:', '//', '%23')):
             continue
         if not os.path.exists(r.lstrip('./')):
             missing.append(f"{p} -> {r}")
-print('\n'.join(missing) if missing else 'all local references resolve')
+print('\n'.join(sorted(set(missing))) if missing else 'all local references resolve')
 PY
 ```
 
