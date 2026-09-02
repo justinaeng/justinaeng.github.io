@@ -10,56 +10,244 @@
 @font-face{font-family:"Maison Neue";src:url("assets/fonts/MaisonNeue-Medium.otf") format("opentype");font-weight:500;font-style:normal;font-display:swap}
 @font-face{font-family:"Maison Neue";src:url("assets/fonts/MaisonNeue-Demi.otf") format("opentype");font-weight:600;font-style:normal;font-display:swap}
 @font-face{font-family:"Maison Neue";src:url("assets/fonts/MaisonNeue-Bold.otf") format("opentype");font-weight:700;font-style:normal;font-display:swap}
-@font-face{font-family:"Maison Neue";src:url("assets/fonts/MaisonNeue-BoldItalic.otf") format("opentype");font-weight:700;font-style:italic;font-display:swap}
-:root{--bg:rgb(251,253,249);--ink:rgb(45,41,45);--muted:rgb(118,121,127);--accent:rgb(242,220,91);--sans:"Maison Neue","Helvetica Neue",Helvetica,Arial,sans-serif}
-*{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.5;-webkit-font-smoothing:antialiased}
-a{color:inherit;text-decoration:none}
-a:hover{color:var(--ink)}
-.nav{position:sticky;top:0;z-index:10;display:flex;align-items:center;justify-content:space-between;background:var(--bg)}
-.nav__home{position:relative;font-weight:700;font-size:16px;letter-spacing:0.01em}
-.nav__home::after{content:"";position:absolute;left:0;right:0;bottom:-6px;border-bottom:1px dashed var(--ink)}
-.nav__arrows{display:flex;gap:16px;font-size:18px}
-.nav__arrows .sep{color:var(--muted)}
-.coming{display:flex;flex-direction:column;align-items:flex-start;padding-block:clamp(96px,13vw,160px)}
-.eyebrow{font-size:12px;font-weight:500;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);margin:0 0 24px}
-h1{font-weight:700;font-size:clamp(34px,5vw,58px);line-height:1.06;letter-spacing:-0.032em;margin:0 0 24px;max-width:19ch;text-wrap:pretty}
-h1 em{font-style:italic;font-weight:700}
-.sub{font-size:clamp(18px,1.6vw,22px);line-height:1.55;max-width:60ch;margin:0 0 48px;text-wrap:pretty}
-.meta{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:24px 48px;border-top:1px solid var(--ink);padding-top:24px;width:100%;margin:0}
-.meta>div{display:flex;flex-direction:column;gap:4px}
-.meta dt{font-size:12px;font-weight:500;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);margin:0}
-.meta dd{margin:0;font-size:16px;font-weight:500}
-.status{display:inline-flex;align-items:center;gap:10px;font-size:13px;color:var(--muted);margin-top:48px}
-.status .pulse{width:8px;height:8px;border-radius:50%;background:rgb(0,185,210);box-shadow:0 0 0 0 rgba(0,185,210,0.6);animation:pulse 2s infinite}
-@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(0,185,210,0.6)}70%{box-shadow:0 0 0 10px rgba(0,185,210,0)}100%{box-shadow:0 0 0 0 rgba(0,185,210,0)}}
 </style>
-<link rel="stylesheet" href="grid.css"/>
+<link rel="stylesheet" href="case-study.css"/>
 </head>
 <body>
 
-<nav class="nav col" aria-label="Primary">
-  <a class="nav__home" href="index.html">Home</a>
-  <div class="nav__arrows">
-    <a href="product-creation.html" aria-label="Previous project">←</a>
-    <span class="sep">|</span>
-    <a href="shopify.html" aria-label="Next project">→</a>
+<nav class="nav" aria-label="Primary">
+  <div class="nav__inner">
+    <a class="nav__home" href="index.html">Home</a>
+    <div class="nav__arrows">
+      <a href="product-creation.html" aria-label="Previous project">&larr;</a>
+      <a href="shopify.html" aria-label="Next project">&rarr;</a>
+    </div>
   </div>
 </nav>
 
-<main class="col">
-  <div class="coming">
-    <p class="eyebrow">CASE STUDY — BANCO NEXT</p>
-    <h1>App onboarding redesign <em>coming soon.</em></h1>
-    <p class="sub">Reimagining the welcome experience for a Brazilian digital bank — a gesture-led tutorial that teaches core interactions in under 90 seconds.</p>
-    <dl class="meta">
-      <div><dt>Company</dt><dd>Banco Next</dd></div>
-      <div><dt>Role</dt><dd>Product designer — prototyping & user research</dd></div>
-      <div><dt>Timeline</dt><dd>Jul — Sep 2018</dd></div>
-    </dl>
-    <span class="status"><span class="pulse"></span> Case study in progress — ping me if you&rsquo;d like a walkthrough.</span>
+<article>
+
+  <header class="lede measure">
+    <h1 class="lede__title">Redesigning Banco Next&rsquo;s onboarding experience to meet the needs of younger generations and those with variable incomes.</h1>
+  </header>
+
+  <div class="company bleed" style="--band:rgb(238,242,240)" aria-label="Banco Next">
+    <img src="assets/banco/logo.png" alt="Banco Next"/>
   </div>
-</main>
+
+  <section class="chapter" aria-labelledby="overview">
+    <div class="measure">
+      <h2 class="chapter__title" id="overview">Overview</h2>
+      <dl class="meta">
+        <div><dt>Consultancy</dt><dd>Capco</dd></div>
+        <div><dt>Client</dt><dd>Bradesco (Next Bank)</dd></div>
+        <div><dt>Role</dt><dd>Product Design &amp; Strategy, UX Research</dd></div>
+      </dl>
+      <p>Bradesco launched Next bank to provide digital banking services for younger generations of Brazilians. R/GA created a brand identity and design language for their digital products, but Next bank found that the account registration rate was very low: Out of 100 people who began onboarding, only 13 were able to finish the process. We spent 6 weeks conducting lean research to understand primary pain points, and worked on-site with the client to propose a more effective workflow.</p>
+    </div>
+    <figure class="frame">
+      <div class="shot shot--contain" style="--ar:2752/1200;background-image:url('assets/banco/hero.png')" role="img" aria-label="Redesigned Banco Next onboarding screens"></div>
+      <figcaption>Redesigned account creation and rewards screens</figcaption>
+    </figure>
+  </section>
+
+  <section class="chapter" aria-labelledby="existing">
+    <div class="measure">
+      <h2 class="chapter__title" id="existing">The existing flow</h2>
+      <p>Upon reviewing the flow, we knew that the redesign needed to guide users to appropriate account plans by making information accessible, removing redundancies where possible, and building trust with professional tone &amp; clear language.</p>
+    </div>
+    <figure class="frame">
+      <div class="shot shot--contain" style="--ar:2752/1692;background-image:url('assets/banco/current-state.png')" role="img" aria-label="Current state onboarding workflow, from account setup through final agreement"></div>
+      <figcaption>Current state workflow &mdash; nine stages, end to end</figcaption>
+      <ul class="notes">
+        <li><span aria-hidden="true">&mdash;</span><p>Requires too much personal information without providing adequate incentives for them to continue</p></li>
+      </ul>
+    </figure>
+  </section>
+
+  <section class="chapter measure" aria-labelledby="insights">
+    <h2 class="chapter__title" id="insights">User research insights</h2>
+    <p>After conducting a 2-day onsite research study, we uncovered 4 main pain points:</p>
+    <div class="cards">
+      <article class="card">
+        <h3>Lack of incentive</h3>
+        <p>Users don&rsquo;t see the value in being customers</p>
+      </article>
+      <article class="card">
+        <h3>Anxiety-inducing</h3>
+        <p>Users feel anxious and uncomfortable giving up their personal information</p>
+      </article>
+      <article class="card">
+        <h3>Poor error handling</h3>
+        <p>Users struggled to understand the errors they made and how to fix it</p>
+      </article>
+      <article class="card">
+        <h3>No process transparency</h3>
+        <p>Users were fatigued by the length of the process</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="chapter measure" aria-labelledby="personas">
+    <h2 class="chapter__title" id="personas">Persona development</h2>
+    <p>In collaboration with the client&rsquo;s anthropologist, we combined our research insights to craft distinct personas for our stakeholders to reference:</p>
+    <div class="personas">
+      <article class="persona">
+        <div class="persona__portrait" style="background-image:url('assets/banco/persona-paulo.png')" role="img" aria-label="Illustration of Paulo"></div>
+        <h3 class="persona__name">Paulo</h3>
+        <p class="persona__role">Financially Independent</p>
+        <p class="persona__quote">&ldquo;If this bank is going to be a part of my life, there shouldn&rsquo;t be so many limitations.&rdquo;</p>
+        <dl class="persona__tech">
+          <dt>Tech consideration</dt>
+          <dd>&rarr; Has a fancier phone (iPhone)</dd>
+          <dd>&rarr; Unlimited data plan</dd>
+        </dl>
+      </article>
+      <article class="persona">
+        <div class="persona__portrait" style="background-image:url('assets/banco/persona-luiza.png')" role="img" aria-label="Illustration of Luiza"></div>
+        <h3 class="persona__name">Luiza</h3>
+        <p class="persona__role">Financially Dependent</p>
+        <p class="persona__quote">&ldquo;Opening a bank account via app should be easier than the traditional approach.&rdquo;</p>
+        <dl class="persona__tech">
+          <dt>Tech consideration</dt>
+          <dd>&rarr; Has an older android phone</dd>
+          <dd>&rarr; Relies on free-wifi/limited data plan</dd>
+        </dl>
+      </article>
+      <article class="persona">
+        <div class="persona__portrait" style="background-image:url('assets/banco/persona-sergio.png')" role="img" aria-label="Illustration of Sergio"></div>
+        <h3 class="persona__name">Sergio</h3>
+        <p class="persona__role">Self-employed/Freelancer</p>
+        <p class="persona__quote">&ldquo;Why does the bank need all of this information from me? I don&rsquo;t feel comfortable.&rdquo;</p>
+        <dl class="persona__tech">
+          <dt>Tech consideration</dt>
+          <dd>&rarr; Has an older android phone (Oreo OS)</dd>
+          <dd>&rarr; Relies on free-wifi/limited data plan</dd>
+        </dl>
+      </article>
+    </div>
+  </section>
+
+  <section class="chapter measure" aria-labelledby="approach">
+    <h2 class="chapter__title" id="approach">Our approach</h2>
+    <p>By having a clear idea of <strong>what</strong> the problems were and <strong>who</strong> our user types were, we focused on addressing every issue in our redesign. We stayed in S&atilde;o Paulo for 2 weeks so that we could meet with various departments to understand their experience, and to workshop solutions together with our research insights and user types in mind.</p>
+  </section>
+
+  <section class="chapter" aria-labelledby="value">
+    <div class="measure">
+      <h2 class="chapter__title" id="value">Demonstrate product value immediately</h2>
+      <p>Instead of demanding the user to submit all personal information &amp; documentation, we only ask for their phone # (ID verification), and their Brazilian tax ID.</p>
+      <p>Users can then see account &amp; card plans they can get, which is a strong incentive for conversion and reduces cognitive load for users who have low-intermediate financial literacy.</p>
+    </div>
+    <figure class="frame">
+      <div class="figrow figrow--fit" style="--rowh:560px">
+        <div class="shot" style="--ar:869/1718;background-image:url('assets/banco/value-screen.png')" role="img" aria-label="Welcome screen introducing account benefits before any data entry"></div>
+      </div>
+      <figcaption>The welcome screen leads with benefits, not forms</figcaption>
+    </figure>
+  </section>
+
+  <section class="chapter measure" aria-labelledby="ocr">
+    <h2 class="chapter__title" id="ocr">Leverage OCR technology</h2>
+    <p>After speaking with engineers, we proposed using the bank&rsquo;s OCR reading technology to read and auto-complete relevant data fields. This allows users to skip manual entry for the following screens:</p>
+    <div class="callout">
+      <p class="callout__figure">Auto-completing 9 inputs</p>
+      <p class="callout__body">saves ~10-15min of time and prevents potential errors</p>
+    </div>
+  </section>
+
+  <section class="chapter" aria-labelledby="tutorials">
+    <div class="measure">
+      <h2 class="chapter__title" id="tutorials">Simplifying the tutorials</h2>
+      <p>The onboarding process contained several multi-screen tutorials (below). In testing, we noticed that most users barely read the screens, swiping as quickly as possible. We saw an opportunity to improve the experience by simplifying the tutorial to one prompt, and providing <strong>contextual</strong> help.</p>
+    </div>
+    <div class="frame">
+      <figure>
+        <div class="shot shot--contain" style="--ar:2420/700;background-image:url('assets/banco/tutorial-current.png')" role="img" aria-label="Existing six-screen ID scan tutorial"></div>
+        <figcaption>Current state flow &mdash; six screens to scan one document</figcaption>
+      </figure>
+      <figure>
+        <div class="shot shot--contain" style="--ar:2244/1308;background-image:url('assets/banco/tutorial-proposed.png')" role="img" aria-label="Proposed flow with an initial prompt, contextual CTA, camera guide and contextual guide"></div>
+        <figcaption>Proposed flow &mdash; one prompt, then guidance in context</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="chapter" aria-labelledby="tone">
+    <div class="measure">
+      <h2 class="chapter__title" id="tone">Tone matters</h2>
+      <p>Feedback from users and local team members revealed that the tone of voice felt outdated and corny, which impacted their trust in the product (i.e. &ldquo;Agora vai l&aacute; ;)&rdquo;)</p>
+      <div class="callout callout--quote">
+        <p>&ldquo;It&rsquo;s like the equivalent of your dad saying &lsquo;That&rsquo;s groovy&rsquo;&rdquo;</p>
+      </div>
+    </div>
+    <figure class="frame">
+      <div class="figrow figrow--fit" style="--rowh:480px">
+        <div class="shot" style="--ar:1051/1308;background-image:url('assets/banco/tone-screen.png')" role="img" aria-label="Confirmation screen carrying the phrase Agora vai la"></div>
+      </div>
+      <figcaption>The confirmation screen users called corny</figcaption>
+    </figure>
+  </section>
+
+  <section class="chapter" aria-labelledby="terms">
+    <div class="measure">
+      <h2 class="chapter__title" id="terms">Make terms &amp; conditions accessible</h2>
+      <p>Since &ldquo;fees&rdquo; were the biggest anxiety across our personas, we prototyped an example of how the terms &amp; conditions could be more accessible to them.</p>
+      <p>A large search field with relevant tags should help users hone in on policies they care about, like fees &amp; data privacy.</p>
+    </div>
+    <figure class="frame">
+      <div class="figrow figrow--fit" style="--rowh:620px">
+        <div class="shot" style="--ar:960/1836;background-image:url('assets/banco/terms-screen.png')" role="img" aria-label="Terms and conditions screen with a large search field and policy tags"></div>
+      </div>
+      <figcaption>Searchable terms, tagged by what users worry about</figcaption>
+    </figure>
+  </section>
+
+  <section class="chapter" aria-labelledby="final">
+    <div class="measure">
+      <h2 class="chapter__title" id="final">Final flow</h2>
+      <p>We presented the final flow with our recommendations to the client and the work was well-received. We reduced the number of screens, gave users a strong incentive to convert, and provided clarity and professionalism where possible.</p>
+    </div>
+    <figure class="frame">
+      <div class="shot shot--contain" style="--ar:2970/1135;background-image:url('assets/banco/final-flow.png')" role="img" aria-label="Proposed onboarding flow, from card and plan recommendation through address"></div>
+      <figcaption>Proposed flow &mdash; fewer screens, incentive first</figcaption>
+    </figure>
+  </section>
+
+  <section class="chapter measure" aria-labelledby="next">
+    <h2 class="chapter__title" id="next">Next steps</h2>
+    <p>After the project close, the client requested ideas for maintaining steady app engagement. We proposed the following:</p>
+    <h3 class="chapter__sub">Educational messages &amp; notifications</h3>
+    <ul class="notes">
+      <li><span aria-hidden="true">&rarr;</span><p>Push notifications to remind users to check their balances, pay their bills, or offer tips on how they can improve their financial standing</p></li>
+      <li><span aria-hidden="true">&rarr;</span><p>Promote discounts (mimos)-- the bank works with various companies to offer monthly discounts, like $20 off Uber rides.</p></li>
+    </ul>
+  </section>
+
+  <section class="chapter measure" aria-labelledby="team">
+    <h2 class="chapter__title" id="team">Team</h2>
+    <div class="credits">
+      <div><h3>Project Manager &amp; BA</h3><p>Suzana Morais
+Bianca Ramas</p></div>
+      <div><h3>Strategy &amp; Visual Design</h3><p>Sebastian Beebee
+David Vu</p></div>
+      <div><h3>Translators</h3><p>Tatiana Alem
+Rebecca Guimar&atilde;es</p></div>
+    </div>
+  </section>
+
+</article>
+
+<nav class="upnext frame" aria-label="Up next">
+  <a class="upnext__card" href="shopify.html">
+    <p class="upnext__eyebrow">Shopify</p>
+    <h2 class="upnext__title">Purchase order strategy</h2>
+  </a>
+  <a class="upnext__card" href="product-creation.html">
+    <p class="upnext__eyebrow">LeafLink</p>
+    <h2 class="upnext__title">Product creation re-architecture</h2>
+  </a>
+</nav>
 
 <footer class="footer">Designed by Justina, built with Claude Design</footer>
 

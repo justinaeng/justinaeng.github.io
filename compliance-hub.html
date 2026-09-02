@@ -1,441 +1,192 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
+<meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
 <title>Justina — Compliance integration hub case study</title>
 <style>
-@font-face { font-family: "Maison Neue"; src: url("./assets/fonts/MaisonNeue-Book.otf") format("opentype"); font-weight: 400; font-style: normal; font-display: swap; }
-@font-face { font-family: "Maison Neue"; src: url("./assets/fonts/MaisonNeue-BookItalic.otf") format("opentype"); font-weight: 400; font-style: italic; font-display: swap; }
-@font-face { font-family: "Maison Neue"; src: url("./assets/fonts/MaisonNeue-Medium.otf") format("opentype"); font-weight: 500; font-style: normal; font-display: swap; }
-@font-face { font-family: "Maison Neue"; src: url("./assets/fonts/MaisonNeue-Demi.otf") format("opentype"); font-weight: 600; font-style: normal; font-display: swap; }
-@font-face { font-family: "Maison Neue"; src: url("./assets/fonts/MaisonNeue-Bold.otf") format("opentype"); font-weight: 700; font-style: normal; font-display: swap; }
-@font-face { font-family: "Maison Neue"; src: url("./assets/fonts/MaisonNeue-BoldItalic.otf") format("opentype"); font-weight: 700; font-style: italic; font-display: swap; }
-
-:root {
-  --ink: rgb(45, 41, 45);
-  --paper: #ffffff;
-  --paper-cool: rgb(247, 247, 247);
-  --leaflink: rgb(30, 22, 75);
-  --leaflink-2: rgb(38, 46, 142);
-  --dark: rgb(25, 23, 25);
-  --aqua: rgba(204, 241, 244, 0.5);
-  --lavender: rgba(214, 216, 240, 0.4);
-  --mint: rgb(244, 251, 249);
-  --shopify-1: rgb(9, 73, 17);
-  --shopify-2: rgb(8, 131, 28);
-  --shopify-text: rgb(147, 246, 128);
-  --rule-soft: rgb(227, 227, 227);
-  --muted: rgb(178, 178, 178);
-  --shadow-image: 0 3px 12px 1px rgba(38, 38, 38, 0.1), 0 3px 3px 1px rgba(38, 38, 38, 0.05);
-  --shadow-soft: 0 4px 20px 0 rgba(0,0,0,0.05);
-}
-
-* { box-sizing: border-box; }
-html, body { margin: 0; padding: 0; background: var(--paper); color: var(--ink); font-family: "Maison Neue", "Helvetica Neue", Helvetica, Arial, sans-serif; font-size: 16px; line-height: 1.5; -webkit-font-smoothing: antialiased; }
-img { display: block; max-width: 100%; }
-a { color: inherit; text-decoration: none; }
-
-/* ── Nav ── */
-.nav { position: sticky; top: 0; z-index: 10; height: 64px; display: flex; align-items: center; justify-content: space-between; padding: 0 32px; background: rgba(255,255,255,0.92); backdrop-filter: saturate(1.2) blur(10px); -webkit-backdrop-filter: saturate(1.2) blur(10px); }
-.nav__home { font-weight: 700; font-size: 16px; line-height: 24px; position: relative; }
-.nav__home::after { content: ""; position: absolute; left: 0; right: 0; bottom: -2px; border-bottom: 1px dashed var(--ink); }
-.nav__arrows { display: flex; gap: 20px; font-size: 16px; }
-.nav__arrows .sep { color: var(--muted); }
-
-/* ── Hero ── */
-.hero { padding: 136px 173px; max-width: 1376px; margin: 0 auto; }
-.hero__copy { max-width: 1027px; font-weight: 400; font-size: 56px; line-height: 72px; letter-spacing: -0.005em; margin: 0; text-wrap: pretty; }
-
-/* ── Company band (LeafLink dark purple) ── */
-.company { width: 1376px; max-width: 100%; margin: 0 auto; height: 774px; background: var(--leaflink); display: flex; align-items: center; justify-content: center; }
-.company__lockup { width: 892px; max-width: 64%; height: auto; display: block; }
-
-/* ── Project description ── */
-.project-desc { padding: 136px 242px 136px 242px; padding-right: 259px; }
-.project-desc__grid { display: grid; grid-template-columns: 155px 678px; column-gap: 106px; max-width: 939px; }
-.project-desc__meta { display: flex; flex-direction: column; gap: 28px; }
-.meta-block__title { font-weight: 700; font-size: 16px; line-height: 24px; margin: 0; }
-.meta-block__value { font-size: 18px; line-height: 26px; margin: 0; }
-.project-desc__copy { font-size: 24px; line-height: 36px; width: 678px; max-width: 100%; margin: 0; text-wrap: pretty; white-space: pre-line; }
-
-/* ── Articles + Desc (2-col: copy block + 2 stacked article cards) ── */
-.articles { padding: 100px 64px 96px; background: var(--paper); }
-.articles__inner { display: grid; grid-template-columns: 644fr 548fr; gap: 108px; max-width: 1300px; margin: 0 auto; }
-.articles__copy { display: flex; flex-direction: column; gap: 24px; }
-.articles__heading { font-weight: 700; font-size: 24px; line-height: 36px; margin: 0; padding: 8px 0; border-top: 1px solid rgb(0,114,240); border-bottom: 1px solid rgb(0,114,240); color: var(--ink); }
-.articles__body { font-size: 24px; line-height: 36px; margin: 0; color: var(--ink); white-space: pre-line; text-wrap: pretty; }
-.articles__cards { display: flex; flex-direction: column; gap: 20px; }
-.articles__card { display: grid; grid-template-columns: 148px 1fr; gap: 24px; padding: 16px 24px; border: 1px solid rgb(204,204,204); border-radius: 2px; box-shadow: 0 4px 20px rgba(0,0,0,0.05); align-items: center; background: var(--paper); }
-.articles__thumb { width: 148px; height: 148px; border-radius: 4px; background-position: center; background-size: cover; background-repeat: no-repeat; background-color: rgb(244,244,244); }
-.articles__text { display: flex; flex-direction: column; gap: 8px; min-width: 0; }
-.articles__title { font-size: 18px; line-height: 24px; color: rgb(0,114,240); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 2px; margin: 0; }
-.articles__excerpt { font-size: 16px; line-height: 22px; color: rgb(45,41,45); margin: 0; }
-.articles__date { font-size: 14px; line-height: 20px; color: rgb(120,120,120); margin: 0; }
-
-/* ── Current state workflow (dark band, two before-screens with bullets) ── */
-.before { background: var(--dark); color: rgb(255,255,255); padding: 64px 130px 80px; }
-.before__title { font-weight: 700; font-size: 16px; line-height: 24px; margin: 0 0 41px; color: rgb(255,255,255); }
-.before__grid { display: grid; grid-template-columns: 544px 544px; gap: 90px; }
-.before__col { display: flex; flex-direction: column; }
-.before__shot { width: 544px; height: 422px; border-radius: 2px; background-size: cover; background-position: top center; background-color: rgba(255,255,255,0.04); }
-.before__shot--tall { height: 424px; }
-.before__caption { margin-top: 24px; font-weight: 700; font-size: 16px; line-height: 24px; color: rgb(255,255,255); }
-.before__bullets { margin: 24px 0 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 24px; }
-.before__bullet { display: grid; grid-template-columns: 20px 500px; gap: 24px; align-items: start; }
-.before__bullet svg { width: 20px; height: 20px; margin-top: 4px; color: rgb(230,232,246); }
-.before__bullet p { margin: 0; font-size: 18px; line-height: 24px; color: rgb(255,255,255); text-wrap: pretty; }
-
-/* ── After / mockups (light aqua) ── */
-.after { background: var(--aqua); padding: 80px 119px; display: flex; flex-direction: column; gap: 56px; }
-.after__row { display: flex; flex-direction: column; gap: 20px; }
-.after__caption { font-weight: 700; font-size: 16px; line-height: 24px; margin: 0; }
-.after__shots { display: grid; grid-template-columns: 766px 329px; gap: 107px; }
-.after__shot { border-radius: 2px; background-size: cover; background-position: top center; box-shadow: var(--shadow-image); background-color: var(--paper); }
-.after__shot--main { width: 766px; height: 526px; }
-.after__shot--side { width: 329px; height: 526px; }
-
-/* ── Focus blurb (asymmetric meta + copy) ── */
-.focus { padding: 136px 207px 112px; }
-.focus__grid { display: grid; grid-template-columns: 150px 678px; column-gap: 137px; }
-.focus__copy { font-size: 24px; line-height: 36px; margin: 0; width: 678px; text-wrap: pretty; }
-
-/* ── Traceability screens (3-up, lavender bg) ── */
-.trace { background: var(--lavender); padding: 80px 156px; }
-.trace__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 60px; }
-.trace__col { display: flex; flex-direction: column; gap: 24px; }
-.trace__caption { font-weight: 700; font-size: 16px; line-height: 24px; margin: 0; }
-.trace__shot { width: 100%; aspect-ratio: 504 / 807; border-radius: 2px; background-size: cover; background-position: top center; background-color: var(--paper); box-shadow: var(--shadow-soft); }
-
-/* ── Filters v2 blurb ── */
-.filters-blurb { padding: 136px 250px 136px 250px; }
-.filters-blurb__grid { display: grid; grid-template-columns: 124px 678px; column-gap: 137px; max-width: 939px; }
-.filters-blurb__copy { font-size: 24px; line-height: 36px; width: 678px; margin: 0; text-wrap: pretty; }
-
-/* ── "Old poopy filters" — dark band with 3 small screens ── */
-.oldfilters { background: var(--ink); color: rgb(255,255,255); padding: 88px 97px 96px; }
-.oldfilters__title { font-weight: 700; font-size: 16px; line-height: 24px; margin: 0 0 48px; color: rgb(255,255,255); }
-.oldfilters__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
-.oldfilters__shot { aspect-ratio: 648 / 503; background: var(--paper) center / cover no-repeat url('assets/compliance/old-filter.png'); border-radius: 4px; box-shadow: 0 2px 8px rgba(0,0,0,0.3); overflow: hidden; }
-.oldfilters__caption { font-size: 18px; line-height: 26px; margin: 34px 0 0; color: rgb(255,255,255); max-width: 1245px; }
-
-/* ── Filter exploration (mint band, 3 sub-rows) ── */
-.exploration { background: var(--mint); padding: 104px 64px 0; }
-.exploration__title { font-weight: 700; font-size: 16px; line-height: 24px; margin: 0 0 36px; }
-.exploration__row { padding: 0 0 72px; }
-.exploration__row-title { font-size: 18px; line-height: 26px; margin: 0 0 24px; }
-.exploration__shots { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
-.exploration__shot { aspect-ratio: 425 / 501; background: var(--paper); border-radius: 4px; box-shadow: var(--shadow-soft); background-position: center; background-size: cover; background-repeat: no-repeat; }
-.exploration__shot--side { background-color: rgb(245,247,243); position: relative; overflow: hidden; }
-.exploration__shot--side::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 38%; background: rgba(0,68,144,0.06); border-right: 1px solid rgba(0,68,144,0.15); }
-.exploration__shot--side::after { content: ""; position: absolute; left: 8%; top: 12%; width: 22%; height: 60%; background: rgba(0,114,240,0.18); border-radius: 2px; }
-.exploration__shot--dropdown { background-image: url('assets/compliance/dropdown-filter.png'); background-size: contain; background-color: var(--paper); }
-.exploration__filters { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
-.exploration__filter { aspect-ratio: 305 / 412; background: var(--paper) center / cover no-repeat url('assets/compliance/filter-menu.png'); border-radius: 4px; box-shadow: var(--shadow-soft); }
-.ui-states { display: grid; grid-template-columns: repeat(6, 1fr); gap: 20px; align-items: start; }
-.ui-state { display: flex; flex-direction: column; gap: 12px; }
-.ui-state__title { font-weight: 700; font-size: 16px; line-height: 24px; margin: 0; }
-.ui-pill { height: 36px; padding: 0 12px; border-radius: 100px; background: var(--paper); border: 1px solid rgb(197,201,212); display: inline-flex; align-items: center; gap: 6px; font-size: 14px; line-height: 20px; color: rgb(39,40,42); width: max-content; }
-.ui-pill__caret { width: 0; height: 0; border-left: 4px solid transparent; border-right: 4px solid transparent; border-top: 5px solid rgb(39,40,42); margin-left: 4px; }
-.ui-pill__caret--up { border-top: 0; border-bottom: 5px solid rgb(39,40,42); }
-.ui-pill__badge { background: rgb(39,40,42); color: rgb(255,255,255); font-size: 11px; font-weight: 700; padding: 1px 6px; border-radius: 100px; }
-.ui-pill--hover { background: rgb(245,246,248); }
-.ui-pill--clicked { background: rgb(232,233,238); }
-.ui-pill--selected { border-color: rgb(0,114,240); box-shadow: 0 0 0 2px rgba(0,114,240,0.18); }
-.ui-pill--disabled { background: rgb(232,233,238); color: rgb(197,201,212); }
-.ui-pill--disabled .ui-pill__caret { border-top-color: rgb(197,201,212); }
-
-/* ── Outcome / NextSteps band ── */
-.outcome { width: 100%; height: 872px; background: linear-gradient(rgba(120,127,204,0.7), rgba(120,127,204,0.7)), url('assets/compliance/nextsteps-bg.jpg') center / cover no-repeat; padding: 288px 207px; display: grid; grid-template-columns: 503px 504px; gap: 224px; }
-.outcome__card { background: rgb(255,255,255); border-radius: 4px; padding: 24px; height: 295px; display: flex; flex-direction: column; gap: 12px; justify-content: center; }
-.outcome__card-title { font-weight: 700; font-size: 36px; line-height: 44px; margin: 0; }
-.outcome__card-body { font-size: 24px; line-height: 36px; margin: 0; text-wrap: pretty; }
-.outcome__shot { width: 504px; height: 295px; border-radius: 4px; background: url('assets/compliance/trace-shoutout.png') center / cover no-repeat; }
-
-/* ── Team band ── */
-.team { background: var(--paper); padding: 80px 207px; }
-.team__grid { display: grid; grid-template-columns: 242px 242px 242px; gap: 80px; }
-.team-block__title { font-weight: 700; font-size: 16px; line-height: 24px; margin: 0 0 4px; }
-.team-block__body { font-size: 18px; line-height: 26px; margin: 0; white-space: pre-line; }
-
-/* ── Project nav ── */
-.projectnav { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-.projectnav__card { height: 121px; padding: 0 32px; display: flex; align-items: center; justify-content: space-between; overflow: hidden; }
-.projectnav__card--leaflink { background: var(--leaflink-2); color: rgb(255,255,255); }
-.projectnav__card--shopify { background: linear-gradient(var(--shopify-1) 0%, var(--shopify-2) 100%); color: var(--shopify-text); }
-.projectnav__title { font-weight: 700; font-size: 36px; line-height: 52px; letter-spacing: -0.005em; margin: 0; }
-.projectnav__cta { font-weight: 500; font-size: 18px; line-height: 32px; position: relative; }
-.projectnav__cta::after { content: ""; position: absolute; left: 0; right: 0; bottom: -4px; border-bottom: 1px dashed currentColor; }
-
-.footer { text-align: center; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); padding: 48px 32px 32px; }
+@font-face{font-family:"Maison Neue";src:url("assets/fonts/MaisonNeue-Book.otf") format("opentype");font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:"Maison Neue";src:url("assets/fonts/MaisonNeue-BookItalic.otf") format("opentype");font-weight:400;font-style:italic;font-display:swap}
+@font-face{font-family:"Maison Neue";src:url("assets/fonts/MaisonNeue-Medium.otf") format("opentype");font-weight:500;font-style:normal;font-display:swap}
+@font-face{font-family:"Maison Neue";src:url("assets/fonts/MaisonNeue-Demi.otf") format("opentype");font-weight:600;font-style:normal;font-display:swap}
+@font-face{font-family:"Maison Neue";src:url("assets/fonts/MaisonNeue-Bold.otf") format("opentype");font-weight:700;font-style:normal;font-display:swap}
 </style>
-<link rel="stylesheet" href="grid.css"/>
+<link rel="stylesheet" href="case-study.css"/>
 </head>
 <body>
 
 <nav class="nav" aria-label="Primary">
-  <a class="nav__home" href="index.html">Home</a>
-  <div class="nav__arrows">
-    <a href="shopify.html" aria-label="Previous project">←</a>
-    <span class="sep">|</span>
-    <a href="product-creation.html" aria-label="Next project">→</a>
+  <div class="nav__inner">
+    <a class="nav__home" href="index.html">Home</a>
+    <div class="nav__arrows">
+      <a href="shopify.html" aria-label="Previous project">&larr;</a>
+      <a href="product-creation.html" aria-label="Next project">&rarr;</a>
+    </div>
   </div>
 </nav>
 
-<header class="hero">
-  <p class="hero__copy">A robust integration feature that empowers Sellers to effectively manage their inventory while also meeting state compliance requirements &amp; regulations.</p>
-</header>
+<article>
 
-<section class="company" aria-label="LeafLink">
-  <img class="company__lockup" src="assets/compliance/leaflink-logo.svg" alt="LeafLink" />
-</section>
+  <header class="lede measure">
+    <h1 class="lede__title">A robust integration feature that empowers Sellers to effectively manage their inventory while also meeting state compliance requirements &amp; regulations.</h1>
+  </header>
 
-<section class="project-desc">
-  <div class="project-desc__grid">
-    <div class="project-desc__meta">
-      <div><p class="meta-block__title">Company</p><p class="meta-block__value">LeafLink</p></div>
-      <div><p class="meta-block__title">Role</p><p class="meta-block__value">Product Design &amp; Research</p></div>
-      <div><p class="meta-block__title">Date</p><p class="meta-block__value">3/2022 – 4/2024</p></div>
-    </div>
-    <p class="project-desc__copy">Seed to sale compliance is a requirement for every cannabis business. Most states use Metrc, an application that tracks the lifecycle of every cannabis product, from seedling → harvest → process → retail. It is illegal to sell cannabis products without the compliance ID attached to it. Businesses find Metrc very frustrating to use, as it is unintuitive and prone to outages.
-
-To address this industry pain point, we built a robust integration feature that allows our customers to manage their compliance data within our platform. This data sync enables our customers to effectively market their products, price inventory by potency, and streamline supply chain operations.</p>
+  <div class="company bleed" aria-label="LeafLink">
+    <img src="assets/compliance/leaflink-logo.svg" alt="LeafLink"/>
   </div>
-</section>
 
-<section class="articles" aria-label="Industry context">
-  <div class="articles__inner">
-    <div class="articles__copy">
-      <h2 class="articles__heading">Adhering to state compliance requirements</h2>
-      <p class="articles__body">Package data is stored and managed in Metrc, but it is a finicky application that most cannabis businesses hate dealing with. The user experience is poor, outages happen frequently, and the company does not address any of these pain points in a timely manner, if at all.
+  <section class="chapter measure" aria-labelledby="overview">
+    <h2 class="chapter__title" id="overview">Overview</h2>
+    <dl class="meta">
+      <div><dt>Company</dt><dd>LeafLink</dd></div>
+      <div><dt>Role</dt><dd>Product Design &amp; Research</dd></div>
+      <div><dt>Time frame</dt><dd>15 months</dd></div>
+    </dl>
+    <p>Seed to sale compliance is a requirement for every cannabis business. Most states use Metrc, an application that tracks the lifecycle of every cannabis product, from seedling &rarr; harvest &rarr; process &rarr; retail. It is illegal to sell cannabis products without the compliance ID attached to it. Businesses find Metrc very frustrating to use, as it is unintuitive and prone to outages.</p>
+    <p>To address this industry pain point, we built a robust integration feature that allows our customers to manage their compliance data within our platform. This data sync enables our customers to effectively market their products, price inventory by potency, and streamline supply chain operations.</p>
+  </section>
 
-LeafLink has limited Metrc integration capabilities, like syncing inventory amounts, but the current state is still very manual and inefficient.</p>
+  <section class="chapter" aria-labelledby="context">
+    <div class="measure">
+      <h2 class="chapter__title" id="context">Adhering to state compliance requirements</h2>
+      <p>Package data is stored and managed in Metrc, but it is a finicky application that most cannabis businesses hate dealing with. The user experience is poor, outages happen frequently, and the company does not address any of these pain points in a timely manner, if at all.</p>
+      <p>LeafLink has limited Metrc integration capabilities, like syncing inventory amounts, but the current state is still very manual and inefficient.</p>
     </div>
-    <div class="articles__cards">
-      <article class="articles__card">
-        <div class="articles__thumb articles__thumb--a" role="img" aria-label="Marijuana Moment article"></div>
-        <div class="articles__text">
-          <p class="articles__title">Metrc downtime in California &lsquo;causing a lot of heartburn&rsquo; for cannabis companies</p>
-          <p class="articles__excerpt">Problems with California&rsquo;s seed-to-sale tracking system are causing cannabis companies to spend thousands of dollars in extra time and money&hellip;</p>
-          <p class="articles__date">Mar 11, 2021</p>
+    <figure class="frame">
+      <div class="shot shot--contain" style="--ar:2760/560;background-image:url('assets/compliance/articles-strip.png')" role="img" aria-label="News coverage of seed-to-sale tracking failures"></div>
+      <figcaption>Coverage of Metrc outages and recalls across five states</figcaption>
+    </figure>
+  </section>
+
+  <section class="chapter" aria-labelledby="problem">
+    <div class="measure">
+      <h2 class="chapter__title" id="problem">Metrc integration feature (Before)</h2>
+    </div>
+    <div class="frame">
+      <figure>
+        <div class="figrow figrow--2 figrow--fit" style="--rowh:340px">
+          <div class="shot" style="background-image:url('assets/compliance/sync-metrc.png')" role="img" aria-label="Metrc quantity sync screen"></div>
+          <div class="shot" style="background-image:url('assets/compliance/thc-listing.png')" role="img" aria-label="Product listing with THC and CBD percentages"></div>
         </div>
-      </article>
-      <article class="articles__card">
-        <div class="articles__thumb articles__thumb--b" role="img" aria-label="Cannabis Business Times article"></div>
-        <div class="articles__text">
-          <p class="articles__title">&lsquo;Clerical error&rsquo; nearly shut down Michigan marijuana industry</p>
-          <p class="articles__excerpt">&ldquo;All options are on the table,&rdquo; Brian Hanna, executive director of the Cannabis Regulatory Agency, said after a vendor sent the industry&hellip;</p>
-          <p class="articles__date">Mar 2, 2023</p>
+        <figcaption>Syncing Metrc quantities &middot; updating THC% and CBD%</figcaption>
+        <div class="figrow figrow--2">
+          <ul class="notes">
+            <li>
+              <svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="9" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M6 13c1.4-2 6.6-2 8 0" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><circle cx="7.2" cy="8.5" r="1" fill="currentColor"/><circle cx="12.8" cy="8.5" r="1" fill="currentColor"/></svg>
+              <p>Larger companies (10K+ products) often have issues syncing, resulting in crashes/page freezes</p>
+            </li>
+            <li>
+              <svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="9" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M6 13c1.4-2 6.6-2 8 0" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><circle cx="7.2" cy="8.5" r="1" fill="currentColor"/><circle cx="12.8" cy="8.5" r="1" fill="currentColor"/></svg>
+              <p>Vague terms like &ldquo;reserved&rdquo; and &ldquo;available&rdquo; cause confusion. Infrequent syncing can exacerbate this issue and impact reporting</p>
+            </li>
+          </ul>
+          <ul class="notes">
+            <li>
+              <svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="9" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M6 13c1.4-2 6.6-2 8 0" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><circle cx="7.2" cy="8.5" r="1" fill="currentColor"/><circle cx="12.8" cy="8.5" r="1" fill="currentColor"/></svg>
+              <p>Larger companies (10K+ products) often don&rsquo;t manually add test results for all their products</p>
+            </li>
+            <li>
+              <svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="9" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M6 13c1.4-2 6.6-2 8 0" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><circle cx="7.2" cy="8.5" r="1" fill="currentColor"/><circle cx="12.8" cy="8.5" r="1" fill="currentColor"/></svg>
+              <p>Buyers will not be able to see THC, CBD, and cannabinoid %, which is a crucial data set they need for purchasing</p>
+            </li>
+          </ul>
         </div>
-      </article>
+      </figure>
     </div>
-  </div>
-</section>
+  </section>
 
-<section class="before" aria-label="Current state workflow — Metrc integration (Before)">
-  <p class="before__title">Metrc integration feature (Before)</p>
-  <div class="before__grid">
-    <div class="before__col">
-      <div class="before__shot" style="background-image:url('assets/compliance/sync-metrc.png')"></div>
-      <p class="before__caption">Sync Metrc quantities with LeafLink inventory</p>
-      <ul class="before__bullets">
-        <li class="before__bullet">
-          <svg viewBox="0 0 20 20" fill="currentColor"><circle cx="10" cy="10" r="9" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M6 13c1.4-2 6.6-2 8 0" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><circle cx="7.2" cy="8.5" r="1" fill="currentColor"/><circle cx="12.8" cy="8.5" r="1" fill="currentColor"/></svg>
-          <p>Larger companies (10K+ products) often have issues syncing, resulting in crashes/page freezes</p>
-        </li>
-        <li class="before__bullet">
-          <svg viewBox="0 0 20 20" fill="currentColor"><circle cx="10" cy="10" r="9" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M6 13c1.4-2 6.6-2 8 0" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><circle cx="7.2" cy="8.5" r="1" fill="currentColor"/><circle cx="12.8" cy="8.5" r="1" fill="currentColor"/></svg>
-          <p>Vague terms like “reserved” and “available” cause confusion. Infrequent syncing can exacerbate this issue and impact reporting</p>
-        </li>
-      </ul>
+  <section class="chapter" aria-labelledby="approach">
+    <div class="measure">
+      <h2 class="chapter__title" id="approach">Approach</h2>
+      <p>The integration&rsquo;s strongest feature is mapping Metrc data to our customers&rsquo; products in LeafLink. With this, they can map Metrc data to their LeafLink products, auto-generate invoices, price inventory by THC%, and provide crucial product information to Buyers. It is important for us to empower customers with the tools they need to run their business successfully.</p>
+      <h3 class="chapter__sub">Setup and mapping</h3>
     </div>
-    <div class="before__col">
-      <div class="before__shot before__shot--tall" style="background-image:url('assets/compliance/thc-listing.png')"></div>
-      <p class="before__caption">Update product listings with THC% and CBD%</p>
-      <ul class="before__bullets">
-        <li class="before__bullet">
-          <svg viewBox="0 0 20 20" fill="currentColor"><circle cx="10" cy="10" r="9" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M6 13c1.4-2 6.6-2 8 0" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><circle cx="7.2" cy="8.5" r="1" fill="currentColor"/><circle cx="12.8" cy="8.5" r="1" fill="currentColor"/></svg>
-          <p>Larger companies (10K+ products) often don’t manually add test results for all their products</p>
-        </li>
-        <li class="before__bullet">
-          <svg viewBox="0 0 20 20" fill="currentColor"><circle cx="10" cy="10" r="9" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M6 13c1.4-2 6.6-2 8 0" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><circle cx="7.2" cy="8.5" r="1" fill="currentColor"/><circle cx="12.8" cy="8.5" r="1" fill="currentColor"/></svg>
-          <p>Buyers will not be able to see THC, CBD, and cannabinoid %, which is a crucial data set they need for purchasing</p>
-        </li>
-      </ul>
+    <div class="frame">
+      <figure>
+        <div class="figrow figrow--split figrow--fit" style="--rowh:480px">
+          <div class="shot" style="background-image:url('assets/compliance/setup-large.png')" role="img" aria-label="Metrc integration setup screen"></div>
+          <div class="shot" style="background-image:url('assets/compliance/setup-medium.png')" role="img" aria-label="Metrc integration setup detail"></div>
+        </div>
+        <figcaption>Setting up the Metrc integration</figcaption>
+      </figure>
     </div>
-  </div>
-</section>
+  </section>
 
-<section class="after" aria-label="Setup flow mockups">
-  <div class="after__row">
-    <p class="after__caption">After: Setup metrc integration</p>
-    <div class="after__shots">
-      <div class="after__shot after__shot--main" style="background-image:url('assets/compliance/setup-large.png')"></div>
-      <div class="after__shot after__shot--side" style="background-image:url('assets/compliance/setup-medium.png')"></div>
+  <section class="chapter" aria-labelledby="filters">
+    <div class="measure">
+      <h2 class="chapter__title" id="filters">In depth: filters</h2>
+      <p>Once I started working on design concepts for the mapping flow, it became clear to me that our current filter pattern would interfere with the overall quality of the mapping experience. In collaboration with the design systems owner, we proposed a new filter framework that would improve the filter experience across the entire platform.</p>
     </div>
-  </div>
-  <div class="after__row">
-    <p class="after__caption">Metrc Management: Set compliance data mapping products</p>
-    <div class="after__shots">
-      <div class="after__shot after__shot--main" style="background-image:url('assets/compliance/setup-large.png')"></div>
-      <div class="after__shot after__shot--side" style="background-image:url('assets/compliance/setup-medium.png')"></div>
+    <div class="frame">
+      <figure>
+        <div class="shot shot--contain" style="--ar:2640/2048;background-image:url('assets/compliance/old-filter.png')" role="img" aria-label="Existing stacked-dropdown filter framework"></div>
+        <figcaption>Current filter framework &mdash; stacked drop-downs don&rsquo;t scale</figcaption>
+      </figure>
     </div>
-  </div>
-  <div class="after__row">
-    <p class="after__caption">Metrc Management: Map packages (compliance data) to products</p>
-    <div class="after__shots">
-      <div class="after__shot after__shot--main" style="background-image:url('assets/compliance/setup-large.png')"></div>
-      <div class="after__shot after__shot--side" style="background-image:url('assets/compliance/setup-medium.png')"></div>
+    <div class="measure">
+      <h3 class="chapter__sub">Exploration &amp; refinement</h3>
     </div>
-  </div>
-</section>
+    <div class="frame">
+      <figure>
+        <div class="figrow figrow--2 figrow--fit" style="--rowh:620px">
+          <div class="shot" style="background-image:url('assets/compliance/filter-menu.png')" role="img" aria-label="Side panel filter exploration"></div>
+          <div class="shot" style="background-image:url('assets/compliance/dropdown-filter.png')" role="img" aria-label="Dynamic drop-down filter exploration"></div>
+        </div>
+        <figcaption>Option A: side panel &middot; Option B: dynamic drop-down</figcaption>
+      </figure>
+      <figure>
+        <div class="states">
+          <div><p class="states__label">Default</p><span class="pill">Product data <span class="pill__caret"></span></span></div>
+          <div><p class="states__label">Hover</p><span class="pill pill--hover">Product data <span class="pill__caret"></span></span></div>
+          <div><p class="states__label">Clicked</p><span class="pill pill--active">Product data <span class="pill__caret"></span></span></div>
+          <div><p class="states__label">Selected</p><span class="pill pill--selected">Product data <span class="pill__caret"></span></span></div>
+          <div><p class="states__label">Filter applied</p><span class="pill">Product data <span class="pill__badge">3</span><span class="pill__caret"></span></span></div>
+          <div><p class="states__label">Disabled</p><span class="pill pill--disabled">Product data <span class="pill__caret"></span></span></div>
+        </div>
+        <figcaption>Drop-down refinement &mdash; the six filter pill states</figcaption>
+      </figure>
+    </div>
+  </section>
 
-<section class="focus">
-  <div class="focus__grid">
-    <div>
-      <p class="meta-block__title">Our focus</p>
-      <p class="meta-block__value">Streamlining business ops</p>
+  <section class="chapter" aria-labelledby="outcome">
+    <div class="measure">
+      <h2 class="chapter__title" id="outcome">Outcome</h2>
     </div>
-    <p class="focus__copy">The integration’s strongest feature is mapping Metrc data to our customers’ products in LeafLink. With this, they can map Metrc data to their LeafLink products, auto-generate invoices, price inventory by THC%, and provide crucial product information to Buyers. It is important for us to empower customers with the tools they need to run their business successfully.</p>
-  </div>
-</section>
-
-<section class="trace" aria-label="Traceability screens">
-  <div class="trace__grid">
-    <div class="trace__col">
-      <p class="trace__caption">Product Mapping: Set rule for product’s varieties</p>
-      <div class="trace__shot"></div>
-    </div>
-    <div class="trace__col">
-      <p class="trace__caption">Packages page</p>
-      <div class="trace__shot"></div>
-    </div>
-    <div class="trace__col">
-      <p class="trace__caption">Packages: Mapping for product established</p>
-      <div class="trace__shot"></div>
-    </div>
-  </div>
-</section>
-
-<section class="filters-blurb">
-  <div class="filters-blurb__grid">
-    <div>
-      <p class="meta-block__title">An in-depth look</p>
-      <p class="meta-block__value">Filters</p>
-    </div>
-    <p class="filters-blurb__copy">Once I started working on design concepts for the mapping flow, it became clear to me that our current filter pattern would interfere with the overall quality of the mapping experience. In collaboration with the design systems owner, we proposed a new filter framework that would improve the filter experience across the entire platform.</p>
-  </div>
-</section>
-
-<section class="oldfilters" aria-label="Current filter framework">
-  <p class="oldfilters__title">Current filter framework</p>
-  <div class="oldfilters__grid">
-    <div class="oldfilters__shot" role="img" aria-label="Existing stacked-dropdown filter framework"></div>
-    <div class="oldfilters__shot" role="img" aria-label="Existing stacked-dropdown filter framework"></div>
-    <div class="oldfilters__shot" role="img" aria-label="Existing stacked-dropdown filter framework"></div>
-  </div>
-  <p class="oldfilters__caption">Stacked drop-downs don’t scale well and the lack of hierarchy (grouping) makes it difficult to locate the desired filter category</p>
-</section>
-
-<section class="exploration">
-  <p class="exploration__title">Filter exploration &amp; refinement</p>
-
-  <div class="exploration__row">
-    <p class="exploration__row-title">Option A: Side panel filter exploration</p>
-    <div class="exploration__shots">
-      <div class="exploration__shot exploration__shot--side"></div>
-      <div class="exploration__shot exploration__shot--side"></div>
-      <div class="exploration__shot exploration__shot--side"></div>
-    </div>
-  </div>
-
-  <div class="exploration__row">
-    <p class="exploration__row-title">Option B: Dynamic drop-down filter exploration</p>
-    <div class="exploration__shots">
-      <div class="exploration__shot exploration__shot--dropdown"></div>
-      <div class="exploration__shot exploration__shot--dropdown"></div>
-      <div class="exploration__shot exploration__shot--dropdown"></div>
-    </div>
-  </div>
-
-  <div class="exploration__row">
-    <p class="exploration__row-title">Drop-down refinement</p>
-    <div class="exploration__filters">
-      <div class="exploration__filter"></div>
-      <div class="exploration__filter"></div>
-      <div class="exploration__filter"></div>
-      <div class="exploration__filter"></div>
-    </div>
-  </div>
-
-  <div class="exploration__row">
-    <p class="exploration__row-title">UI refinement</p>
-    <div class="ui-states">
-      <div class="ui-state">
-        <p class="ui-state__title">Default</p>
-        <span class="ui-pill">Product data <span class="ui-pill__caret"></span></span>
+    <div class="frame">
+      <div class="callout">
+        <p class="callout__figure">+500 new customers</p>
+        <p class="callout__body">In the first 6 months, we grew our customer base from 80 to 500 customers.</p>
       </div>
-      <div class="ui-state">
-        <p class="ui-state__title">Hover</p>
-        <span class="ui-pill ui-pill--hover">Product data <span class="ui-pill__caret"></span></span>
-      </div>
-      <div class="ui-state">
-        <p class="ui-state__title">Clicked</p>
-        <span class="ui-pill ui-pill--clicked">Product data <span class="ui-pill__caret"></span></span>
-      </div>
-      <div class="ui-state">
-        <p class="ui-state__title">Selected/Focus</p>
-        <span class="ui-pill ui-pill--selected">Product data <span class="ui-pill__caret ui-pill__caret--up"></span></span>
-      </div>
-      <div class="ui-state">
-        <p class="ui-state__title">Filter applied</p>
-        <span class="ui-pill">Product data <span class="ui-pill__badge">3</span><span class="ui-pill__caret"></span></span>
-      </div>
-      <div class="ui-state">
-        <p class="ui-state__title">Disabled</p>
-        <span class="ui-pill ui-pill--disabled">Product data <span class="ui-pill__caret"></span></span>
-      </div>
+      <figure>
+        <div class="shot" style="--ar:932/546;background-image:url('assets/compliance/trace-shoutout.png')" role="img" aria-label="Internal Slack shoutout for the traceability launch"></div>
+        <figcaption>Internal reaction to the launch</figcaption>
+      </figure>
     </div>
-  </div>
-</section>
+  </section>
 
-<section class="outcome" aria-label="Outcomes">
-  <div class="outcome__card">
-    <p class="outcome__card-title">+ 500 new customers</p>
-    <p class="outcome__card-body">In the first 6 months, we grew our customer base from 80 to 500 customers.</p>
-  </div>
-  <div class="outcome__shot" role="img" aria-label="Internal Slack shoutout for the traceability launch"></div>
-</section>
-
-<section class="team">
-  <div class="team__grid">
-    <div>
-      <p class="team-block__title">Product</p>
-      <p class="team-block__body">Griffin Martell
+  <section class="chapter measure" aria-labelledby="team">
+    <h2 class="chapter__title" id="team">Team</h2>
+    <div class="credits">
+      <div><h3>Product</h3><p>Griffin Martell
 Evan Larrimore
-Christian Sibley</p>
-    </div>
-    <div>
-      <p class="team-block__title">Design Systems</p>
-      <p class="team-block__body">Tyler Mays</p>
-    </div>
-    <div>
-      <p class="team-block__title">Engineering</p>
-      <p class="team-block__body">Brad Alexander
+Christian Sibley</p></div>
+      <div><h3>Design Systems</h3><p>Tyler Mays</p></div>
+      <div><h3>Engineering</h3><p>Brad Alexander
 James Miele
-Nevada LeMaster</p>
+Nevada LeMaster</p></div>
     </div>
-  </div>
-</section>
+  </section>
 
-<nav class="projectnav" aria-label="Project navigation">
-  <a class="projectnav__card projectnav__card--leaflink" href="product-creation.html">
-    <h3 class="projectnav__title">Product creation Re-architecture</h3>
-    <span class="projectnav__cta">View</span>
+</article>
+
+<nav class="upnext frame" aria-label="Up next">
+  <a class="upnext__card" href="product-creation.html">
+    <p class="upnext__eyebrow">LeafLink</p>
+    <h2 class="upnext__title">Product creation re-architecture</h2>
   </a>
-  <a class="projectnav__card projectnav__card--shopify" href="shopify.html">
-    <h3 class="projectnav__title">Purchase order strategy</h3>
-    <span class="projectnav__cta">View</span>
+  <a class="upnext__card" href="shopify.html">
+    <p class="upnext__eyebrow">Shopify</p>
+    <h2 class="upnext__title">Purchase order strategy</h2>
   </a>
 </nav>
 

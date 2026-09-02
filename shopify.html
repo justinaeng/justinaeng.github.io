@@ -1,1315 +1,319 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
+<meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>Justina — Purchase Orders case study</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,700;1,700&display=swap" rel="stylesheet">
+<title>Justina — Purchase order strategy case study</title>
 <style>
-/* ──
-   Justina — Shopify POs Case Study
-   Type: Maison Neue (self-hosted) per the Figma file.
-   Weights used: Book 400 / Medium 500 / Demi 600 / Bold 700.
-   ── */
-
-@font-face {
-  font-family: "Maison Neue";
-  src: url("./assets/fonts/MaisonNeue-Book.otf") format("opentype");
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: "Maison Neue";
-  src: url("./assets/fonts/MaisonNeue-BookItalic.otf") format("opentype");
-  font-weight: 400;
-  font-style: italic;
-  font-display: swap;
-}
-@font-face {
-  font-family: "Maison Neue";
-  src: url("./assets/fonts/MaisonNeue-Medium.otf") format("opentype");
-  font-weight: 500;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: "Maison Neue";
-  src: url("./assets/fonts/MaisonNeue-Demi.otf") format("opentype");
-  font-weight: 600;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: "Maison Neue";
-  src: url("./assets/fonts/MaisonNeue-Bold.otf") format("opentype");
-  font-weight: 700;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: "Maison Neue";
-  src: url("./assets/fonts/MaisonNeue-BoldItalic.otf") format("opentype");
-  font-weight: 700;
-  font-style: italic;
-  font-display: swap;
-}
-
-:root {
-  --ink: rgb(45, 41, 45);
-  --ink-soft: rgb(74, 74, 74);
-  --paper: #ffffff;
-  --paper-warm: rgb(255, 254, 248);
-  --paper-cool: rgb(247, 247, 247);
-  --paper-blue: rgb(235, 244, 255);
-  --paper-aqua: rgba(224, 255, 251, 0.4);
-  --paper-mint: rgb(240, 255, 246);
-  --accent-yellow: rgb(242, 220, 91);
-  --accent-green: rgb(4, 253, 83);
-  --accent-magenta: rgba(250, 1, 255, 0.15);
-  --rule: rgb(45, 41, 45);
-  --rule-soft: rgb(227, 227, 227);
-  --muted: rgb(178, 178, 178);
-
-  --shadow-card: 0 3px 12px 1px rgba(38, 38, 38, 0.1),
-                 0 3px 3px 1px rgba(38, 38, 38, 0.05);
-  --shadow-image: 0 2px 2px 0 rgba(38, 38, 38, 0.05),
-                  0 2px 6px 0 rgba(38, 38, 38, 0.1);
-  --shadow-inset: 0 3px 1px -1px rgba(26, 26, 26, 0.07),
-                  inset 0 1px 0 0 rgba(204, 204, 204, 0.5),
-                  inset 0 -1px 0 0 rgba(0, 0, 0, 0.17),
-                  inset -1px 0 0 0 rgba(0, 0, 0, 0.13),
-                  inset 1px 0 0 0 rgba(0, 0, 0, 0.13);
-  --shadow-soft: 0 1px 4px 0 rgba(12, 12, 13, 0.05);
-}
-
-* { box-sizing: border-box; }
-
-html, body {
-  margin: 0;
-  padding: 0;
-  background: var(--paper);
-  color: var(--ink);
-  font-family: "Maison Neue", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-size: 16px;
-  line-height: 1.5;
-  -webkit-font-smoothing: antialiased;
-  text-rendering: optimizeLegibility;
-}
-
-img { display: block; max-width: 100%; }
-
-a { color: inherit; text-decoration: none; }
-
-/* ── Nav ── */
-.nav {
-  position: sticky;
-  top: 0;
-  z-index: 10;
-  height: 64px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 32px;
-  background: rgba(255, 255, 255, 0.92);
-  backdrop-filter: saturate(1.2) blur(10px);
-  -webkit-backdrop-filter: saturate(1.2) blur(10px);
-  border-bottom: 1px solid transparent;
-}
-.nav__home {
-  font-weight: 700;
-  font-size: 16px;
-  line-height: 24px;
-  position: relative;
-}
-.nav__home::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: -2px;
-  border-bottom: 1px dashed var(--ink);
-}
-.nav__arrows {
-  display: flex;
-  gap: 20px;
-  font-size: 16px;
-  color: var(--ink);
-}
-.nav__arrows a { display: inline-flex; align-items: center; gap: 6px; }
-.nav__arrows .sep { color: var(--muted); }
-
-/* ── Frame container ── */
-.frame {
-  width: 100%;
-  margin: 0 auto;
-}
-.frame--full { padding: 0; }
-
-/* ── Sections ── */
-/* Every top-level section sits inside the same 1376w content frame */
-/* with 32px outer margins, regardless of internal vertical rhythm. */
-.section {
-  width: 100%;
-  max-width: var(--grid-page);
-  margin: 0 auto;
-  padding: 88px var(--grid-margin) 108px;
-}
-.section--white { background: var(--paper); }
-.section--warm { background: var(--paper-warm); }
-.section--cool { background: var(--paper-cool); }
-.section--aqua { background: var(--paper-aqua); }
-.section--mint { background: var(--paper-mint); }
-
-.container {
-  max-width: 1242px;
-  margin: 0 auto;
-}
-
-/* ── Headline eyebrow (underlined section label) ── */
-.eyebrow {
-  border-bottom: 1px solid var(--rule);
-  padding: 0 0 8px 0;
-  font-weight: 700;
-  font-size: 16px;
-  line-height: 24px;
-  letter-spacing: 0;
-  color: var(--ink);
-  display: block;
-  margin: 0 0 32px;
-}
-
-/* ── Hero ── */
-/* Figma: 1376w (left:32), padding 136px 173px; copy 1027x288 @ 56/72 */
-.hero {
-  padding: 136px 173px;
-  background: var(--paper);
-  max-width: 1376px;
-  margin: 0 auto;
-}
-.hero__copy {
-  max-width: 1027px;
-  font-family: "Maison Neue", "Helvetica Neue", sans-serif;
-  font-weight: 400;
-  font-size: 56px;
-  line-height: 72px;
-  letter-spacing: -0.005em;
-  color: var(--ink);
-  text-wrap: pretty;
-  margin: 0;
-}
-
-.hero-image {
-  margin: 0 32px 0;
-  box-shadow: var(--shadow-image);
-  background: var(--paper-cool) center / cover no-repeat;
-  aspect-ratio: 1376 / 978;
-  width: calc(100% - 64px);
-}
-
-/* ── Project description ── */
-/* Figma: 1440w, padding 136px 259px 136px 242px; inner 939w */
-/*        meta col 155w, gap 106px, copy 678w @ 24/36 */
-.project-desc {
-  padding: 136px 242px 136px 242px;
-  padding-right: 259px;
-  background: var(--paper);
-}
-.project-desc__grid {
-  display: grid;
-  grid-template-columns: 155px 678px;
-  column-gap: 106px;
-  max-width: 939px;
-}
-.project-desc__meta {
-  display: flex;
-  flex-direction: column;
-  gap: 28px;
-}
-.meta-block__title {
-  font-weight: 700;
-  font-size: 16px;
-  line-height: 24px;
-  margin: 0;
-}
-.meta-block__value {
-  font-size: 18px;
-  line-height: 24px;
-  margin: 0;
-}
-.project-desc__copy {
-  font-family: "Maison Neue", "Helvetica Neue", sans-serif;
-  font-weight: 400;
-  font-size: 24px;
-  line-height: 36px;
-  color: var(--ink);
-  text-wrap: pretty;
-  width: 678px;
-  max-width: 100%;
-  margin: 0;
-}
-
-/* ── Big centered "thesis" slab ── */
-/* Figma: 1375w (left:32.5), padding 136px 174px 160px; copy 1027w @ 44/60 */
-.thesis {
-  padding: 136px 174px 160px;
-  background: var(--paper);
-  max-width: 1375px;
-  margin: 0 auto;
-  text-align: center;
-}
-.thesis__copy {
-  font-family: "Maison Neue", "Helvetica Neue", sans-serif;
-  font-weight: 400;
-  font-size: 44px;
-  line-height: 60px;
-  max-width: 1027px;
-  margin: 0 auto;
-  text-wrap: pretty;
-  letter-spacing: -0.005em;
-}
-.thesis--left .thesis__copy { text-align: left; }
-
-/* ── UX research band (asymmetric two-col) ── */
-/* Figma: 1325w (left:57.5), padding 136px 174px 100px; inner 977w */
-/*        meta 162w, gap 137px, copy 678w @ 24/36 */
-.uxr-intro {
-  padding: 136px 174px 100px;
-  background: var(--paper);
-  max-width: 1325px;
-  margin: 0 auto;
-}
-.uxr-intro__grid {
-  display: grid;
-  grid-template-columns: 162px 678px;
-  column-gap: 137px;
-  max-width: 977px;
-}
-.uxr-intro__copy {
-  font-family: "Maison Neue", "Helvetica Neue", sans-serif;
-  font-size: 24px;
-  line-height: 36px;
-  width: 678px;
-  max-width: 100%;
-  margin: 0;
-  text-wrap: pretty;
-}
-
-/* ── Flow / step cards ── */
-.stepgrid {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 16px;
-}
-.step {
-  background: var(--paper);
-  border-radius: 8px;
-  box-shadow: var(--shadow-card);
-  padding: 20px 24px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 16px;
-  min-height: 206px;
-}
-.step__icon {
-  width: 91px;
-  height: 96px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--ink);
-}
-.step__icon svg, .step__icon img { width: 100%; height: 100%; display: block; }
-.step__title {
-  font-weight: 700;
-  font-size: 18px;
-  line-height: 20px;
-  margin: 0;
-  text-align: center;
-}
-.step__hint {
-  font-size: 15px;
-  line-height: 18px;
-  text-align: center;
-  color: var(--ink);
-  margin: 0;
-}
-
-/* ── JTBD cards ── */
-.jtbdgrid {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 16px;
-}
-.jtbd {
-  background: var(--paper);
-  border-radius: 8px;
-  box-shadow: var(--shadow-soft);
-  padding: 20px 24px;
-  min-height: 136px;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-.jtbd__want {
-  font-family: "JetBrains Mono", "Maison Neue Mono", ui-monospace, monospace;
-  font-size: 12px;
-  line-height: 16px;
-  color: var(--ink);
-}
-.jtbd hr {
-  margin: 6px 0;
-  border: 0;
-  border-top: 1px solid var(--muted);
-  width: 16px;
-}
-.jtbd__so {
-  font-family: "JetBrains Mono", "Maison Neue Mono", ui-monospace, monospace;
-  font-weight: 700;
-  font-style: italic;
-  font-size: 12px;
-  line-height: 16px;
-  color: var(--ink);
-}
-
-/* ── Themes (3 cards) ── */
-.themegrid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 16px;
-  margin-bottom: 60px;
-}
-.theme-card {
-  border-radius: 8px;
-  padding: 24px;
-  min-height: 252px;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-.theme-card__header {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-.theme-card__icon {
-  width: 20px;
-  height: 20px;
-  color: var(--ink);
-}
-.theme-card__title {
-  font-weight: 700;
-  font-size: 20px;
-  line-height: 24px;
-  margin: 0;
-}
-.theme-card__body {
-  font-size: 18px;
-  line-height: 26px;
-  margin: 0;
-  text-wrap: pretty;
-}
-
-/* ── Solutions (3 cols × 2 stacked pain cards) ── */
-.solutiongrid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 18px;
-}
-.solution-col {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-.painpoint {
-  border-radius: 8px;
-  padding: 16px 24px;
-  min-height: 92px;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-.painpoint__text {
-  font-size: 18px;
-  line-height: 24px;
-  margin: 0;
-  text-wrap: pretty;
-}
-.painpoint__meters {
-  display: flex;
-  gap: 40px;
-  align-items: center;
-}
-.meter {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 16px;
-  font-weight: 500;
-}
-.meter__bar {
-  display: flex;
-  gap: 3px;
-}
-.meter__seg {
-  width: 20px;
-  height: 4px;
-  background: var(--rule-soft);
-  border-radius: 1px;
-}
-.meter__seg.on { background: var(--ink); }
-
-/* ── Current state / image grid ── */
-.currentstate {
-  background: var(--paper-cool);
-  padding: 88px 32px 108px;
-}
-.currentstate__label {
-  font-weight: 700;
-  font-size: 20px;
-  line-height: 24px;
-  margin: 0 0 40px;
-}
-.currentstate__grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 32px;
-}
-.currentstate__shot {
-  width: 100%;
-  aspect-ratio: 678 / 579;
-  background-size: cover;
-  background-position: top center;
-  background-repeat: no-repeat;
-  background-color: var(--paper);
-  border: 1px solid var(--rule-soft);
-}
-.currentstate__caption h4 {
-  font-weight: 700;
-  font-size: 16px;
-  line-height: 20px;
-  margin: 24px 0 12px;
-}
-.currentstate__caption ul {
-  padding: 0;
-  margin: 0;
-  list-style: none;
-  font-weight: 500;
-  font-size: 16px;
-  line-height: 28px;
-}
-
-/* ── Vision / solution sections with screen + callouts ── */
-.vision {
-  padding: 100px 99px;
-  position: relative;
-}
-.vision__header {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 12px;
-}
-.vision__header-icon {
-  width: 20px;
-  height: 20px;
-  color: var(--ink);
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-}
-.vision__header-title {
-  font-weight: 700;
-  font-size: 20px;
-  line-height: 24px;
-  margin: 0;
-}
-.vision__lede {
-  font-size: 16px;
-  line-height: 22px;
-  margin: 0 0 40px;
-  max-width: 999px;
-}
-
-.vision__block {
-  display: grid;
-  grid-template-columns: minmax(0, 960px) 260px;
-  gap: 68px;
-  align-items: start;
-  margin-bottom: 80px;
-}
-.vision__block:last-child { margin-bottom: 0; }
-.vision__shot {
-  width: 100%;
-  border-radius: 20px;
-  background-size: cover;
-  background-position: center top;
-  background-color: var(--paper);
-  aspect-ratio: 960 / 683;
-  box-shadow: var(--shadow-image);
-}
-.vision__shot--tall { aspect-ratio: 960 / 819; }
-.vision__callouts {
-  display: flex;
-  flex-direction: column;
-  gap: 48px;
-  padding-top: 72px;
-}
-.callout__title {
-  font-weight: 700;
-  font-size: 18px;
-  line-height: 20px;
-  margin: 0 0 12px;
-}
-.callout__body {
-  font-size: 16px;
-  line-height: 22px;
-  margin: 0;
-  color: var(--ink);
-  text-wrap: pretty;
-}
-
-/* ── Reduce duplicative actions (three 'email' shots) ── */
-.reduce {
-  background: var(--paper);
-  padding: 96px 32px;
-}
-.reduce__header {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 40px;
-}
-.reduce__grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
-  align-items: end;
-}
-.reduce__shot {
-  width: 100%;
-  aspect-ratio: 445 / 380;
-  background-size: cover;
-  background-position: top center;
-  background-color: var(--paper);
-  border-radius: 8px;
-  box-shadow: var(--shadow-image);
-  position: relative;
-  border: 1px solid var(--rule-soft);
-}
-.reduce__cursor {
-  position: absolute;
-  width: 24px;
-  height: 32px;
-  pointer-events: none;
-}
-.reduce__cursor::before {
-  content: "";
-  position: absolute;
-  left: 0; top: 0;
-  width: 24px; height: 24px;
-  border-radius: 50%;
-  background: var(--accent-magenta);
-}
-.reduce__cursor svg {
-  position: absolute;
-  left: 12px; top: 13px;
-  width: 12px; height: 19px;
-}
-.reduce__captions {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
-  margin-top: 32px;
-}
-.reduce__caption-num {
-  font-weight: 700;
-  font-size: 18px;
-  line-height: 20px;
-  margin: 0 0 12px;
-}
-.reduce__caption-body {
-  font-size: 16px;
-  line-height: 22px;
-  margin: 0;
-  max-width: 420px;
-}
-
-/* ── Cost summary sub-section ── */
-.costsummary {
-  margin-top: 24px;
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) 329px;
-  gap: 40px;
-  align-items: start;
-}
-.costsummary__cards {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
-}
-.costsummary__card {
-  width: 100%;
-  aspect-ratio: 390 / 190;
-  background-size: cover;
-  background-position: center;
-  border-radius: 8px;
-  background-color: var(--paper);
-  border: 1px solid var(--rule-soft);
-}
-.costsummary__callouts {
-  display: flex;
-  flex-direction: column;
-  gap: 40px;
-}
-
-/* ── Next steps (mirrors Project Description layout) ── */
-.nextsteps {
-  background: var(--paper);
-  padding: 136px 242px 136px 242px;
-  padding-right: 259px;
-}
-.nextsteps__grid {
-  display: grid;
-  grid-template-columns: 155px 678px;
-  column-gap: 106px;
-  max-width: 939px;
-}
-.nextsteps__copy {
-  font-family: "Maison Neue", "Helvetica Neue", sans-serif;
-  font-size: 24px;
-  line-height: 36px;
-  width: 678px;
-  max-width: 100%;
-  margin: 0;
-  text-wrap: pretty;
-}
-
-/* ── API / Email discovery ── */
-.api {
-  background: var(--paper-warm);
-  padding: 128px 119px;
-}
-.api__grid {
-  display: grid;
-  grid-template-columns: 590px 1fr;
-  gap: 108px;
-  max-width: 1400px;
-  margin: 0 auto;
-}
-.api__shot {
-  width: 590px;
-  height: 369px;
-  border-radius: 8px;
-  background-size: cover;
-  background-position: top center;
-  box-shadow: var(--shadow-inset);
-}
-.api__copy h4 {
-  font-weight: 700;
-  font-size: 18px;
-  line-height: 20px;
-  margin: 0 0 12px;
-}
-.api__copy p {
-  font-size: 16px;
-  line-height: 22px;
-  margin: 0;
-  text-wrap: pretty;
-  white-space: pre-line;
-}
-
-/* ── Team ── */
-.team {
-  padding: 100px 98px;
-}
-.team__grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 40px;
-}
-.team-block__title {
-  font-weight: 700;
-  font-size: 16px;
-  line-height: 24px;
-  margin: 0 0 4px;
-}
-.team-block__body {
-  font-size: 18px;
-  line-height: 24px;
-  margin: 0;
-  white-space: pre-line;
-}
-
-/* ── Next project nav ── */
-.projectnav {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 8px;
-}
-.projectnav__card {
-  height: 121px;
-  padding: 0 32px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  overflow: hidden;
-  position: relative;
-  background-size: cover;
-  background-position: center;
-}
-.projectnav__card--first {
-  background-image: linear-gradient(90deg, rgba(255,255,255,0.78), rgba(255,255,255,0.55)),
-                    url(./assets/next-project-bg.png);
-}
-.projectnav__card--second {
-  background-color: var(--accent-green);
-}
-.projectnav__title {
-  font-weight: 700;
-  font-size: 36px;
-  line-height: 52px;
-  letter-spacing: -0.005em;
-  margin: 0;
-}
-.projectnav__cta {
-  font-weight: 500;
-  font-size: 18px;
-  line-height: 32px;
-  position: relative;
-}
-.projectnav__cta::after {
-  content: "";
-  position: absolute;
-  left: 0; right: 0; bottom: -4px;
-  border-bottom: 1px dashed var(--ink);
-}
-
-/* ── Arrows between screens and callouts (visual affordance) */
-.connector {
-  position: absolute;
-  border-top: 1.5px solid var(--ink);
-  pointer-events: none;
-}
-.connector::after {
-  content: "";
-  position: absolute;
-  right: -6px; top: -5px;
-  border: 5px solid transparent;
-  border-left-color: var(--ink);
-}
-
-/* ── Footer spacer ── */
-.footer {
-  padding: 40px 32px;
-  font-size: 12px;
-  color: var(--ink-soft);
-  text-align: center;
-  font-family: "JetBrains Mono", ui-monospace, monospace;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-}
-
-/* subtle fade-in on scroll */
-@media (prefers-reduced-motion: no-preference) {
-  .reveal { opacity: 0; transform: translateY(8px); transition: opacity 700ms ease, transform 700ms ease; }
-  .reveal.is-visible { opacity: 1; transform: none; }
-}
-
+@font-face{font-family:"Maison Neue";src:url("assets/fonts/MaisonNeue-Book.otf") format("opentype");font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:"Maison Neue";src:url("assets/fonts/MaisonNeue-BookItalic.otf") format("opentype");font-weight:400;font-style:italic;font-display:swap}
+@font-face{font-family:"Maison Neue";src:url("assets/fonts/MaisonNeue-Medium.otf") format("opentype");font-weight:500;font-style:normal;font-display:swap}
+@font-face{font-family:"Maison Neue";src:url("assets/fonts/MaisonNeue-Demi.otf") format("opentype");font-weight:600;font-style:normal;font-display:swap}
+@font-face{font-family:"Maison Neue";src:url("assets/fonts/MaisonNeue-Bold.otf") format("opentype");font-weight:700;font-style:normal;font-display:swap}
 </style>
-<link rel="stylesheet" href="grid.css"/>
+<link rel="stylesheet" href="case-study.css"/>
 </head>
 <body>
 
-<!-- ── Top nav ── -->
 <nav class="nav" aria-label="Primary">
-  <a class="nav__home" href="index.html">Home</a>
-  <div class="nav__arrows">
-    <a href="index.html" aria-label="Back to home">←</a>
-    <span class="sep">|</span>
-    <a href="compliance-hub.html" aria-label="Next project">→</a>
+  <div class="nav__inner">
+    <a class="nav__home" href="index.html">Home</a>
+    <div class="nav__arrows">
+      <a href="index.html" aria-label="Back to home">&larr;</a>
+      <a href="compliance-hub.html" aria-label="Next project">&rarr;</a>
+    </div>
   </div>
 </nav>
 
-<!-- ── Hero ── -->
-<header class="hero">
-  <div class="hero__inner">
-  <p class="hero__copy">
-    Envisioning a purchase order experience that reduces friction,
-    improves inventory management workflows, and provides powerful
-    business insights.
-  </p>
+<article>
+
+  <header class="lede measure">
+    <h1 class="lede__title">Envisioning a purchase order experience that reduces friction, improves inventory management workflows, and provides powerful business insights.</h1>
+  </header>
+
+  <div class="company bleed" style="--band:rgb(234,241,230)" aria-label="Shopify">
+    <img src="assets/portfolio/shopify-logo.png" alt="Shopify"/>
   </div>
-</header>
 
-<!-- ── Hero image (vision comp) ── -->
-<div class="hero-image" style="background-image:url('assets/po-hero.png')" role="img" aria-label="Purchase order vision comp"></div>
+  <section class="chapter" aria-labelledby="overview">
+    <div class="measure">
+      <h2 class="chapter__title" id="overview">Overview</h2>
+      <dl class="meta">
+        <div><dt>Company</dt><dd>Shopify</dd></div>
+        <div><dt>Role</dt><dd>Product Design &amp; Research</dd></div>
+        <div><dt>Time frame</dt><dd>6 months</dd></div>
+      </dl>
+      <p>Shopify&rsquo;s current purchase order experience is quite basic in relation to competitors like Procurify. We conducted merchant interviews and leveraged those insights to envision an ideal-state experience that would reduce friction, provide insightful data points to enhance our merchants&rsquo; business intelligence.</p>
+    </div>
+    <figure class="frame">
+      <div class="shot" style="--ar:2880/2048;background-image:url('assets/po-hero.png')" role="img" aria-label="Purchase order vision comp"></div>
+      <figcaption>Ideal-state purchase order experience</figcaption>
+    </figure>
+  </section>
 
-<!-- ── Project description ── -->
-<section class="project-desc">
-  <div class="project-desc__grid">
-    <aside class="project-desc__meta">
-      <div>
-        <p class="meta-block__title">Company</p>
-        <p class="meta-block__value">Shopify</p>
-      </div>
-      <div>
-        <p class="meta-block__title">Role</p>
-        <p class="meta-block__value">Product Design &amp; Research</p>
-      </div>
-      <div>
-        <p class="meta-block__title">Date</p>
-        <p class="meta-block__value">11/2024 – 04/2025</p>
-      </div>
-    </aside>
-    <p class="project-desc__copy">
-      Shopify's current purchase order experience is quite basic in
-      relation to competitors like Procurify. We conducted merchant
-      interviews and leveraged those insights to envision an ideal-state
-      experience that would reduce friction, provide insightful data
-      points to enhance our merchants' business intelligence.
-    </p>
-  </div>
-</section>
-
-<!-- ── Flow + JTBD ── -->
-<section class="section section--cool" style="background:rgb(245,245,245)">
-  <div class="container">
-    <span class="eyebrow">Purchase order flow</span>
-    <div class="stepgrid">
-      <!-- 5 flow steps — icons from Figma -->
-      <article class="step" style="padding: 20px">
-        <div class="step__icon"><img src="assets/Icon_OrderCreation.svg" alt="Order creation"/></div>
-        <h3 class="step__title">Place order</h3>
-        <p class="step__hint">Merchant requests products and/or raw materials from supplier</p>
+  <section class="chapter measure" aria-labelledby="flow">
+    <h2 class="chapter__title" id="flow">Purchase order flow</h2>
+    <div class="steps">
+      <article class="step">
+        <img src="assets/Icon_OrderCreation.svg" alt=""/>
+        <h3>Place order</h3>
+        <p>Merchant requests products and/or raw materials from supplier</p>
       </article>
-      <article class="step" style="padding: 20px">
-        <div class="step__icon"><img src="assets/Icon_ConfirmOrder.svg" alt="Confirm order"/></div>
-        <h3 class="step__title">Order confirmation</h3>
-        <p class="step__hint">Supplier confirms the order and shares terms</p>
+      <article class="step">
+        <img src="assets/Icon_ConfirmOrder.svg" alt=""/>
+        <h3>Order confirmation</h3>
+        <p>Supplier confirms the order and shares terms</p>
       </article>
-      <article class="step" style="padding: 20px">
-        <div class="step__icon"><img src="assets/Icon_OrderInTransit.svg" alt="Order in transit"/></div>
-        <h3 class="step__title">In transit</h3>
-        <p class="step__hint">Carrier ships the order toward the merchant</p>
+      <article class="step">
+        <img src="assets/Icon_OrderInTransit.svg" alt=""/>
+        <h3>In transit</h3>
+        <p>Carrier ships the order toward the merchant</p>
       </article>
-      <article class="step" style="padding: 20px">
-        <div class="step__icon"><img src="assets/Icon_ReceiveOrder.svg" alt="Receive order"/></div>
-        <h3 class="step__title">Receive</h3>
-        <p class="step__hint">Merchant receives shipment and updates inventory</p>
+      <article class="step">
+        <img src="assets/Icon_ReceiveOrder.svg" alt=""/>
+        <h3>Receive</h3>
+        <p>Merchant receives shipment and updates inventory</p>
       </article>
-      <article class="step" style="padding: 20px 20px 20px 24px">
-        <div class="step__icon"><img src="assets/Icon_ReconcileOrder.svg" alt="Reconcile order"/></div>
-        <h3 class="step__title">Pay/Reconcile</h3>
-        <p class="step__hint">Match invoice, close out the order, and pay supplier</p>
+      <article class="step">
+        <img src="assets/Icon_ReconcileOrder.svg" alt=""/>
+        <h3>Pay/Reconcile</h3>
+        <p>Match invoice, close out the order, and pay supplier</p>
       </article>
     </div>
-
-    <div style="height:60px"></div>
-
-    <span class="eyebrow">Jobs to be done</span>
-    <div class="jtbdgrid">
-      <article class="jtbd">
-        <p class="jtbd__want">I want to create a purchase order quickly and accurately</p>
+    <h3 class="chapter__sub">Jobs to be done</h3>
+    <div class="cards">
+      <article class="card">
+        <p class="card__want">I want to create a purchase order quickly and accurately</p>
         <hr/>
-        <p class="jtbd__so">so I can avoid stockouts and sell continuously</p>
+        <p class="card__so">so I can avoid stockouts and sell continuously</p>
       </article>
-      <article class="jtbd">
-        <p class="jtbd__want">I want to align on payment terms up front</p>
+      <article class="card">
+        <p class="card__want">I want to align on payment terms up front</p>
         <hr/>
-        <p class="jtbd__so">so I can manage cash flow with confidence</p>
+        <p class="card__so">so I can manage cash flow with confidence</p>
       </article>
-      <article class="jtbd">
-        <p class="jtbd__want">I want visibility into shipments in transit</p>
+      <article class="card">
+        <p class="card__want">I want visibility into shipments in transit</p>
         <hr/>
-        <p class="jtbd__so">so I can plan receiving and set merchant expectations</p>
+        <p class="card__so">so I can plan receiving and set merchant expectations</p>
       </article>
-      <article class="jtbd">
-        <p class="jtbd__want">I want to receive and reconcile inventory accurately</p>
+      <article class="card">
+        <p class="card__want">I want to receive and reconcile inventory accurately</p>
         <hr/>
-        <p class="jtbd__so">so my on-hand counts stay trustworthy</p>
+        <p class="card__so">so my on-hand counts stay trustworthy</p>
       </article>
-      <article class="jtbd">
-        <p class="jtbd__want">I want to close orders with matching invoices</p>
+      <article class="card">
+        <p class="card__want">I want to close orders with matching invoices</p>
         <hr/>
-        <p class="jtbd__so">so my books and my inventory agree</p>
+        <p class="card__so">so my books and my inventory agree</p>
       </article>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- ── UX research intro ── -->
-<section class="uxr-intro">
-  <div class="uxr-intro__grid">
-    <div>
-      <p class="meta-block__title">UX research</p>
-      <p class="meta-block__value">Merchant interviews</p>
+  <section class="chapter measure" aria-labelledby="research">
+    <h2 class="chapter__title" id="research">Merchant interviews</h2>
+    <p>Although there was a high-level product roadmap in place, I conducted UXR (~25 user interviews) to better understand merchant needs across a wide range of inventory complexities and industries. No matter what they sold &mdash; from party supplies to construction materials &mdash; merchants expressed the same frustrations and needs. The themes identified from this study led to stronger design solutions and concepts because they allow merchants to manage their bottom line effectively.</p>
+    <h3 class="chapter__sub">Research themes</h3>
+    <div class="cards">
+      <article class="card">
+        <h3>Build forecasting tools</h3>
+        <p>Current data limitations force merchants to be reactive instead of proactive, which can cause issues like stock-outs and brand reputation damage. We should make robust data insights accessible so merchants can effectively anticipate demand and restock in a timely manner.</p>
+      </article>
+      <article class="card">
+        <h3>Reduce duplicative actions</h3>
+        <p>Merchants jump between Shopify, spreadsheets, and email just to send a single PO. Consolidating these actions inside one surface cuts repetitive steps, data re-entry, and the errors that come with them.</p>
+      </article>
+      <article class="card">
+        <h3>Bring financial transparency</h3>
+        <p>Payment status, balance due, and cash-flow context are scattered or missing entirely. Surfacing them in the PO experience helps both operations and finance teams manage obligations proactively.</p>
+      </article>
     </div>
-    <p class="uxr-intro__copy">
-      Although there was a high-level product roadmap in place, I
-      conducted UXR (~25 user interviews) to better understand merchant
-      needs across a wide range of inventory complexities and industries.
-      No matter what they sold — from party supplies to construction
-      materials — merchants expressed the same frustrations and needs.
-      The themes identified from this study led to stronger design
-      solutions and concepts because they allow merchants to manage
-      their bottom line effectively.
-    </p>
-  </div>
-</section>
+    <h3 class="chapter__sub">Solutions</h3>
+    <div class="cards">
+      <article class="solution">
+        <p>A robust dashboard that provides an overview of inventory movements, and reports on purchasing patterns and cost.</p>
+        <p class="rating"><span>Impact <i class="on"></i><i class="on"></i><i class="on"></i></span><span>Effort <i class="on"></i><i class="on"></i><i></i></span></p>
+      </article>
+      <article class="solution">
+        <p>Low-stock alerts that notify the merchant to re-stock or potentially trigger automatic PO creation.</p>
+        <p class="rating"><span>Impact <i class="on"></i><i class="on"></i><i class="on"></i></span><span>Effort <i class="on"></i><i class="on"></i><i class="on"></i></span></p>
+      </article>
+      <article class="solution">
+        <p>In-platform email composer with attached PDF so merchants never leave the tab to send a PO.</p>
+        <p class="rating"><span>Impact <i class="on"></i><i class="on"></i><i class="on"></i></span><span>Effort <i class="on"></i><i class="on"></i><i></i></span></p>
+      </article>
+      <article class="solution">
+        <p>Supplier response-time signal using historical communication patterns.</p>
+        <p class="rating"><span>Impact <i class="on"></i><i class="on"></i><i></i></span><span>Effort <i class="on"></i><i></i><i></i></span></p>
+      </article>
+      <article class="solution">
+        <p>Payment status column at the index level so accounting can prioritize and act on balances.</p>
+        <p class="rating"><span>Impact <i class="on"></i><i class="on"></i><i class="on"></i></span><span>Effort <i class="on"></i><i class="on"></i><i></i></span></p>
+      </article>
+      <article class="solution">
+        <p>Cost summary redesign that separates incurred costs from payments made.</p>
+        <p class="rating"><span>Impact <i class="on"></i><i class="on"></i><i></i></span><span>Effort <i class="on"></i><i></i><i></i></span></p>
+      </article>
+    </div>
+  </section>
 
-<!-- ── UXR themes + solutions ── -->
-<section class="section section--white">
-  <div class="container">
-    <span class="eyebrow">UXR themes</span>
-    <div class="themegrid">
-      <article class="theme-card" style="background:rgb(235,244,255)">
-        <div class="theme-card__header">
-          <span class="theme-card__icon" aria-hidden="true">
-            <svg viewBox="0 0 20 20" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 15l4-4 3 3 7-7"/><path d="M13 7h4v4"/></svg>
-          </span>
-          <h3 class="theme-card__title">Build forecasting tools</h3>
+  <section class="chapter" aria-labelledby="current">
+    <div class="measure">
+      <h2 class="chapter__title" id="current">Current state</h2>
+    </div>
+    <div class="frame">
+      <figure>
+        <div class="figrow figrow--2 figrow--fit" style="--rowh:340px">
+          <div class="shot" style="background-image:url('assets/og-po-index.png')" role="img" aria-label="Existing purchase orders index"></div>
+          <div class="shot" style="background-image:url('assets/og-create-po.png')" role="img" aria-label="Existing create purchase order screen"></div>
         </div>
-        <p class="theme-card__body">
-          Current data limitations force merchants to be reactive instead of
-          proactive, which can cause issues like stock-outs and brand
-          reputation damage. We should make robust data insights accessible
-          so merchants can effectively anticipate demand and restock in a
-          timely manner.
-        </p>
-      </article>
-      <article class="theme-card" style="background:rgb(255,250,232)">
-        <div class="theme-card__header">
-          <span class="theme-card__icon" aria-hidden="true">
-            <svg viewBox="0 0 20 20" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M10 2v4M10 14v4M2 10h4M14 10h4M4.2 4.2l2.9 2.9M12.9 12.9l2.9 2.9M4.2 15.8l2.9-2.9M12.9 7.1l2.9-2.9"/></svg>
-          </span>
-          <h3 class="theme-card__title">Reduce duplicative actions</h3>
-        </div>
-        <p class="theme-card__body">
-          Merchants jump between Shopify, spreadsheets, and email just to
-          send a single PO. Consolidating these actions inside one surface
-          cuts repetitive steps, data re-entry, and the errors that come
-          with them.
-        </p>
-      </article>
-      <article class="theme-card" style="background:rgb(235,255,244)">
-        <div class="theme-card__header">
-          <span class="theme-card__icon" aria-hidden="true">
-            <svg viewBox="0 0 20 20" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="10" cy="10" r="7"/><path d="M10 6v4l2.5 2.5"/></svg>
-          </span>
-          <h3 class="theme-card__title">Bring financial transparency</h3>
-        </div>
-        <p class="theme-card__body">
-          Payment status, balance due, and cash-flow context are scattered or
-          missing entirely. Surfacing them in the PO experience helps both
-          operations and finance teams manage obligations proactively.
-        </p>
-      </article>
-    </div>
-
-    <span class="eyebrow">Solutions</span>
-    <div class="solutiongrid">
-      <div class="solution-col">
-        <article class="painpoint" style="background:rgba(235,244,255,0.6)">
-          <p class="painpoint__text">A robust dashboard that provides an overview of inventory movements, and reports on purchasing patterns and cost.</p>
-          <div class="painpoint__meters">
-            <span class="meter">Impact<span class="meter__bar"><i class="meter__seg on"></i><i class="meter__seg on"></i><i class="meter__seg on"></i></span></span>
-            <span class="meter">Effort<span class="meter__bar"><i class="meter__seg on"></i><i class="meter__seg on"></i><i class="meter__seg"></i></span></span>
-          </div>
-        </article>
-        <article class="painpoint" style="background:rgba(235,244,255,0.6)">
-          <p class="painpoint__text">Low-stock alerts that notify the merchant to re-stock or potentially trigger automatic PO creation.</p>
-          <div class="painpoint__meters">
-            <span class="meter">Impact<span class="meter__bar"><i class="meter__seg on"></i><i class="meter__seg on"></i><i class="meter__seg on"></i></span></span>
-            <span class="meter">Effort<span class="meter__bar"><i class="meter__seg on"></i><i class="meter__seg on"></i><i class="meter__seg on"></i></span></span>
-          </div>
-        </article>
-      </div>
-      <div class="solution-col">
-        <article class="painpoint" style="background:rgba(255,250,232,0.7)">
-          <p class="painpoint__text">In-platform email composer with attached PDF so merchants never leave the tab to send a PO.</p>
-          <div class="painpoint__meters">
-            <span class="meter">Impact<span class="meter__bar"><i class="meter__seg on"></i><i class="meter__seg on"></i><i class="meter__seg on"></i></span></span>
-            <span class="meter">Effort<span class="meter__bar"><i class="meter__seg on"></i><i class="meter__seg on"></i><i class="meter__seg"></i></span></span>
-          </div>
-        </article>
-        <article class="painpoint" style="background:rgba(255,250,232,0.7)">
-          <p class="painpoint__text">Supplier response-time signal using historical communication patterns.</p>
-          <div class="painpoint__meters">
-            <span class="meter">Impact<span class="meter__bar"><i class="meter__seg on"></i><i class="meter__seg on"></i><i class="meter__seg"></i></span></span>
-            <span class="meter">Effort<span class="meter__bar"><i class="meter__seg on"></i><i class="meter__seg"></i><i class="meter__seg"></i></span></span>
-          </div>
-        </article>
-      </div>
-      <div class="solution-col">
-        <article class="painpoint" style="background:rgba(235,255,244,0.7)">
-          <p class="painpoint__text">Payment status column at the index level so accounting can prioritize and act on balances.</p>
-          <div class="painpoint__meters">
-            <span class="meter">Impact<span class="meter__bar"><i class="meter__seg on"></i><i class="meter__seg on"></i><i class="meter__seg on"></i></span></span>
-            <span class="meter">Effort<span class="meter__bar"><i class="meter__seg on"></i><i class="meter__seg on"></i><i class="meter__seg"></i></span></span>
-          </div>
-        </article>
-        <article class="painpoint" style="background:rgba(235,255,244,0.7)">
-          <p class="painpoint__text">Cost summary redesign that separates incurred costs from payments made.</p>
-          <div class="painpoint__meters">
-            <span class="meter">Impact<span class="meter__bar"><i class="meter__seg on"></i><i class="meter__seg on"></i><i class="meter__seg"></i></span></span>
-            <span class="meter">Effort<span class="meter__bar"><i class="meter__seg on"></i><i class="meter__seg"></i><i class="meter__seg"></i></span></span>
-          </div>
-        </article>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ── Current state ── -->
-<section class="currentstate">
-  <div class="container" style="max-width:1376px">
-    <p class="currentstate__label">Current state</p>
-    <div class="currentstate__grid">
-      <div>
-        <div class="currentstate__shot" style="background-image:url('./assets/og-po-index.png')"></div>
-        <div class="currentstate__caption">
-          <h4>Purchase orders index</h4>
-          <ul>
-            <li>Lack of high-level overview or general insights into orders &amp; inventory</li>
-            <li>No way to see or track payment status</li>
-            <li>Lack of transparency into transport status for multi-shipment orders</li>
+        <figcaption>Purchase orders index &middot; create purchase order</figcaption>
+        <div class="figrow figrow--2">
+          <ul class="notes">
+            <li><span aria-hidden="true">&mdash;</span><p>Lack of high-level overview or general insights into orders &amp; inventory</p></li>
+            <li><span aria-hidden="true">&mdash;</span><p>No way to see or track payment status</p></li>
+            <li><span aria-hidden="true">&mdash;</span><p>Lack of transparency into transport status for multi-shipment orders</p></li>
+          </ul>
+          <ul class="notes">
+            <li><span aria-hidden="true">&mdash;</span><p>No recommendations on order quantities or bundling of popular products</p></li>
+            <li><span aria-hidden="true">&mdash;</span><p>Limited options for payment terms, and no way to create a custom method</p></li>
+            <li><span aria-hidden="true">&mdash;</span><p>No way to email from the platform &mdash; merchants must export, attach, and send</p></li>
           </ul>
         </div>
-      </div>
-      <div>
-        <div class="currentstate__shot" style="background-image:url('./assets/og-create-po.png')"></div>
-        <div class="currentstate__caption">
-          <h4>Create purchase order</h4>
-          <ul>
-            <li>No recommendations on order quantities or bundling of popular products</li>
-            <li>Limited options for payment terms, and no way to create a custom method</li>
-            <li>No way to email from the platform — merchants must export, attach, and send</li>
+      </figure>
+    </div>
+  </section>
+
+  <blockquote class="pullquote measure">
+    <p>Drawing from these research themes, I defined solutions for the purchase order experience that would empower merchants to effectively manage their inventory, and ultimately improve profitability.</p>
+  </blockquote>
+
+  <section class="chapter" aria-labelledby="forecasting">
+    <div class="measure">
+      <h2 class="chapter__title" id="forecasting">Forecasting</h2>
+      <p>Empower merchants with high-level metrics and insights so they can optimize their daily workflows and tasks.</p>
+    </div>
+    <div class="frame">
+      <figure>
+        <div class="shot" style="--ar:2880/2048;background-image:url('assets/forecast-01.png')" role="img" aria-label="Forecasting dashboard with metrics cards"></div>
+        <figcaption>Metrics cards and an inventory status column</figcaption>
+        <div class="figrow figrow--2">
+          <ul class="notes">
+            <li><span aria-hidden="true">&mdash;</span><p><strong>High-level metrics cards.</strong> Provide a daily or weekly snapshot of their inventory and sales.</p></li>
+          </ul>
+          <ul class="notes">
+            <li><span aria-hidden="true">&mdash;</span><p><strong>Inventory status column.</strong> Display robust metrics on all inventory items so merchants can plan their orders more effectively.</p></li>
           </ul>
         </div>
-      </div>
+      </figure>
+      <figure>
+        <div class="shot" style="--ar:2400/2048;background-image:url('assets/forecast-02.png')" role="img" aria-label="AI-powered reorder recommendations"></div>
+        <figcaption>AI-powered reorder recommendations</figcaption>
+        <ul class="notes">
+          <li><span aria-hidden="true">&mdash;</span><p>AI assistant that calculates and recommends re-order quantities based on industry-standard formulas.</p></li>
+        </ul>
+      </figure>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- ── Thesis slab ── -->
-<section class="thesis thesis--left">
-  <p class="thesis__copy">
-    Drawing from these research themes, I defined solutions for the
-    purchase order experience that would empower merchants to effectively
-    manage their inventory, and ultimately improve profitability.
-  </p>
-</section>
-
-<!-- ── Forecasting solutions ── -->
-<section class="vision section--aqua" style="background:rgba(224,255,251,0.4)">
-  <div class="vision__header">
-    <span class="vision__header-icon">
-      <svg viewBox="0 0 20 20" width="20" height="20" fill="currentColor"><path d="M10 1l1.8 4.2L16 7l-4.2 1.8L10 13l-1.8-4.2L4 7l4.2-1.8L10 1zM15 12l.9 2.1L18 15l-2.1.9L15 18l-.9-2.1L12 15l2.1-.9L15 12z"/></svg>
-    </span>
-    <h2 class="vision__header-title">Forecasting</h2>
-  </div>
-  <p class="vision__lede">Empower merchants with high-level metrics and insights so they can optimize their daily workflows and tasks.</p>
-
-  <div class="vision__block">
-    <div class="vision__shot" style="background-image:url('./assets/forecast-01.png')"></div>
-    <div class="vision__callouts">
-      <div>
-        <p class="callout__title">High-level metrics cards</p>
-        <p class="callout__body">Provide a daily or weekly snapshot of their inventory and sales.</p>
-      </div>
-      <div>
-        <p class="callout__title">Inventory status column</p>
-        <p class="callout__body">Display robust metrics on all inventory items so merchants can plan their orders more effectively.</p>
-      </div>
+  <section class="chapter" aria-labelledby="reduce">
+    <div class="measure">
+      <h2 class="chapter__title" id="reduce">Reduce duplicative actions</h2>
     </div>
-  </div>
-
-  <div class="vision__block">
-    <div class="vision__shot vision__shot--tall" style="background-image:url('./assets/forecast-02.png')"></div>
-    <div class="vision__callouts">
-      <div>
-        <p class="callout__title">AI-powered recommendations</p>
-        <p class="callout__body">AI assistant that calculates and recommends re-order quantities based on industry-standard formulas.</p>
-      </div>
+    <div class="frame">
+      <figure>
+        <div class="shot" style="--ar:2400/2048;background-image:url('assets/email-01.png')" role="img" aria-label="In-platform email composer for sending a purchase order"></div>
+        <figcaption>Emailing a supplier without leaving the platform</figcaption>
+        <ul class="notes notes--numbered">
+          <li><p>Make &ldquo;Email supplier&rdquo; a primary CTA because that will always be the merchant&rsquo;s next step. The &ldquo;Save&rdquo; button lets them return to a draft later.</p></li>
+          <li><p>Generate a PDF of the purchase order that is attached to the email and enable a preview mode.</p></li>
+          <li><p>Confirm the email was sent successfully &mdash; assuming we have the supplier&rsquo;s historical purchase data, we can surface an average response time.</p></li>
+        </ul>
+      </figure>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- ── Reduce duplicative actions ── -->
-<section class="reduce">
-  <div class="container" style="max-width:1376px">
-    <div class="reduce__header">
-      <span class="vision__header-icon">
-        <svg viewBox="0 0 20 20" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 6h12l-2 8H5z"/><path d="M7 10v3M11 10v3"/><path d="M17 4l-1 2M17 9h2M16 14l1 1.5"/></svg>
-      </span>
-      <h2 class="vision__header-title">Reduce duplicative actions</h2>
+  <section class="chapter" aria-labelledby="financial">
+    <div class="measure">
+      <h2 class="chapter__title" id="financial">Financial transparency</h2>
+      <p>Adapt the experience to capture unique payment programs and methods accepted by international suppliers.</p>
     </div>
-
-    <div class="reduce__grid">
-      <div class="reduce__shot" style="background-image:url('./assets/email-01.png')">
-        <span class="reduce__cursor" style="left:28%;top:8%">
-          <svg viewBox="0 0 12 19" fill="rgb(250,1,255)"><path d="M0 0l4 14 2.5-5.5L12 6 0 0z"/></svg>
-        </span>
-      </div>
-      <div class="reduce__shot" style="background-image:url('./assets/email-01.png');filter:hue-rotate(10deg) brightness(1.02)"></div>
-      <div class="reduce__shot" style="background-image:url('./assets/email-01.png');filter:hue-rotate(-15deg)">
-        <span class="reduce__cursor" style="left:62%;top:90%">
-          <svg viewBox="0 0 12 19" fill="rgb(250,1,255)"><path d="M0 0l4 14 2.5-5.5L12 6 0 0z"/></svg>
-        </span>
-      </div>
+    <div class="frame">
+      <figure>
+        <div class="shot" style="--ar:2400/2048;background-image:url('assets/improved-po-index.png')" role="img" aria-label="Purchase orders index with payment status and balance due"></div>
+        <figcaption>Payment status and balance due at the index level</figcaption>
+        <div class="figrow figrow--3">
+          <ul class="notes">
+            <li><span aria-hidden="true">&mdash;</span><p><strong>High-level metrics cards.</strong> Enable smarter cash management with metrics cards that provide a daily snapshot of purchase order cash flows.</p></li>
+          </ul>
+          <ul class="notes">
+            <li><span aria-hidden="true">&mdash;</span><p><strong>Payment status column.</strong> Introduce a payment status column so the accounting department can prioritize and manage payments.</p></li>
+          </ul>
+          <ul class="notes">
+            <li><span aria-hidden="true">&mdash;</span><p><strong>Balance due.</strong> Display what is owed at the index level so merchants can manage multiple orders at a time.</p></li>
+          </ul>
+        </div>
+      </figure>
+      <figure>
+        <div class="shot shot--contain" style="--ar:1156/562;background-image:url('assets/cost-summary.png')" role="img" aria-label="Cost summary module exploration"></div>
+        <figcaption>Cost summary module exploration</figcaption>
+        <div class="figrow figrow--2">
+          <ul class="notes">
+            <li><span aria-hidden="true">&mdash;</span><p><strong>Revamp summary module.</strong> Assuming payment-processing functionality was available, I would have continued exploring layouts for this module, to ensure the layout is intuitive to all persona types and to establish a visual distinction between incurred costs versus payments made.</p></li>
+          </ul>
+          <ul class="notes">
+            <li><span aria-hidden="true">&mdash;</span><p><strong>Information density.</strong> Continue exploring and testing layout densities to optimize for clarity.</p></li>
+          </ul>
+        </div>
+      </figure>
     </div>
+  </section>
 
-    <div class="reduce__captions">
-      <div>
-        <p class="reduce__caption-num">01</p>
-        <p class="reduce__caption-body">Make "Email supplier" a primary CTA because that will always be the merchant's next step. The "Save" button lets them return to a draft later.</p>
-      </div>
-      <div>
-        <p class="reduce__caption-num">02</p>
-        <p class="reduce__caption-body">Generate a PDF of the purchase order that is attached to the email and enable a preview mode.</p>
-      </div>
-      <div>
-        <p class="reduce__caption-num">03</p>
-        <p class="reduce__caption-body">Confirm the email was sent successfully — assuming we have the supplier's historical purchase data, we can surface an average response time.</p>
-      </div>
+  <blockquote class="pullquote measure">
+    <p>In the GSD prototype phase I would have conducted technical investigations with engineering to define API workflows and to iterate on potential email integration or AI-based OCR solutions.</p>
+  </blockquote>
+
+  <section class="chapter" aria-labelledby="ocr">
+    <div class="measure">
+      <h2 class="chapter__title" id="ocr">Explore AI-based OCR solutions</h2>
+      <p>Throughout the PO lifecycle, email is used to send the request, confirm the order, receive shipping/tracking information, and to manage invoice reconciliation. Products like Ramp currently leverage AI-based OCR tools to review and gather data from attachments like invoices and receipts. I believe a similar solution could reduce manual data entry and management for purchase orders.</p>
+      <p>&rarr; Scrape and import purchase orders, shipment notices, invoices</p>
     </div>
-  </div>
-</section>
+    <figure class="frame">
+      <div class="shot" style="--ar:2880/1800;background-image:url('assets/gmail-screenshot.png')" role="img" aria-label="Supplier email thread carrying purchase order attachments"></div>
+      <figcaption>Purchase order data arrives as email attachments</figcaption>
+    </figure>
+  </section>
 
-<!-- ── Financial transparency ── -->
-<section class="vision section--mint" style="background:rgb(240,255,246)">
-  <div class="vision__header">
-    <span class="vision__header-icon">
-      <svg viewBox="0 0 20 20" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="10" cy="10" r="7"/><path d="M10 5v10M12.5 7.5h-3a1.5 1.5 0 0 0 0 3h1a1.5 1.5 0 1 1 0 3h-3"/></svg>
-    </span>
-    <h2 class="vision__header-title">Financial transparency</h2>
-  </div>
-  <p class="vision__lede">Adapt the experience to capture unique payment programs and methods accepted by international suppliers.</p>
+  <section class="chapter measure" aria-labelledby="next">
+    <h2 class="chapter__title" id="next">Next steps</h2>
+    <p>Assuming the project was funded, next steps would have been to prototype the solutions into refined flows to share with product, engineering, and key stakeholders. Feedback from these collaborative sessions would be used to define technical constraints, project milestones, and a roadmap for build.</p>
+  </section>
 
-  <div class="vision__block">
-    <div class="vision__shot vision__shot--tall" style="background-image:url('./assets/improved-po-index.png')"></div>
-    <div class="vision__callouts">
-      <div>
-        <p class="callout__title">High-level metrics cards</p>
-        <p class="callout__body">Enable smarter cash management with metrics cards that provide a daily snapshot of purchase order cash flows.</p>
-      </div>
-      <div>
-        <p class="callout__title">Payment status column</p>
-        <p class="callout__body">Introduce a payment status column so the accounting department can prioritize and manage payments.</p>
-      </div>
-      <div>
-        <p class="callout__title">Balance due</p>
-        <p class="callout__body">Display what is owed at the index level so merchants can manage multiple orders at a time.</p>
-      </div>
+  <section class="chapter measure" aria-labelledby="team">
+    <h2 class="chapter__title" id="team">Team</h2>
+    <div class="credits">
+      <div><h3>Product &amp; Design</h3><p>Dylan Tittel
+Jane Tran</p></div>
+      <div><h3>Design System</h3><p>Polaris</p></div>
+      <div><h3>Engineering</h3><p>George Ferreira</p></div>
     </div>
-  </div>
+  </section>
 
-  <!-- Cost summary sub-exploration -->
-  <div class="costsummary">
-    <div class="costsummary__cards">
-      <div class="costsummary__card" style="background-image:url('./assets/cost-summary.png')"></div>
-      <div class="costsummary__card" style="background-image:url('./assets/cost-summary.png');filter:saturate(0.95)"></div>
-      <div class="costsummary__card" style="background-image:url('./assets/cost-summary.png');filter:brightness(0.98)"></div>
-    </div>
-    <div class="costsummary__callouts">
-      <div>
-        <p class="callout__title">Revamp summary module</p>
-        <p class="callout__body" style="white-space:pre-line">Assuming payment-processing functionality was available, I would have continued exploring layouts for this module, with the following goals:
-• Ensure the layout is intuitive and clear to all persona types (purchasing, finance, etc.)
-• Establish a visual distinction between incurred costs versus payments made</p>
-      </div>
-      <div>
-        <p class="callout__title">Information density</p>
-        <p class="callout__body">Continue exploring and testing layout densities to optimize for clarity.</p>
-      </div>
-    </div>
-  </div>
-</section>
+</article>
 
-<!-- ── Thesis #2 ── -->
-<section class="thesis">
-  <p class="thesis__copy">
-    In the GSD prototype phase I would have conducted technical
-    investigations with engineering to define API workflows and to
-    iterate on potential email integration or AI-based OCR solutions.
-  </p>
-</section>
-
-<!-- ── API / Email discovery ── -->
-<section class="api">
-  <div class="api__grid">
-    <div class="api__shot" style="background-image:url('./assets/gmail-screenshot.png')"></div>
-    <div class="api__copy">
-      <h4>Explore AI-based OCR solutions</h4>
-      <p>Throughout the PO lifecycle, email is used to send the request, confirm the order, receive shipping/tracking information, and to manage invoice reconciliation. Products like Ramp currently leverage AI-based OCR tools to review and gather data from attachments like invoices and receipts. I believe a similar solution could reduce manual data entry and management for purchase orders.
-
-→ Scrape and import purchase orders, shipment notices, invoices</p>
-    </div>
-  </div>
-</section>
-
-<!-- ── Next steps ── -->
-<section class="nextsteps">
-  <div class="nextsteps__grid">
-    <aside class="project-desc__meta">
-      <div>
-        <p class="meta-block__title">Next steps</p>
-      </div>
-    </aside>
-    <p class="nextsteps__copy">
-      Assuming the project was funded, next steps would have been to
-      prototype the solutions into refined flows to share with product,
-      engineering, and key stakeholders. Feedback from these collaborative
-      sessions would be used to define technical constraints, project
-      milestones, and a roadmap for build.
-    </p>
-  </div>
-</section>
-
-<!-- ── Team / credits ── -->
-<section class="team">
-  <div class="team__grid">
-    <div>
-      <p class="team-block__title">Product &amp; Design</p>
-      <p class="team-block__body">Dylan Tittel
-Jane Tran</p>
-    </div>
-    <div>
-      <p class="team-block__title">Design System</p>
-      <p class="team-block__body">Polaris</p>
-    </div>
-    <div>
-      <p class="team-block__title">Engineering</p>
-      <p class="team-block__body">George Ferreira</p>
-    </div>
-  </div>
-</section>
-
-<!-- ── Project nav ── -->
-<nav class="projectnav" id="next">
-  <a class="projectnav__card projectnav__card--first" href="compliance-hub.html">
-    <h3 class="projectnav__title">Compliance integration hub</h3>
-    <span class="projectnav__cta">View</span>
+<nav class="upnext frame" aria-label="Up next">
+  <a class="upnext__card" href="compliance-hub.html">
+    <p class="upnext__eyebrow">LeafLink &times; Metrc</p>
+    <h2 class="upnext__title">Compliance integration hub</h2>
   </a>
-  <a class="projectnav__card projectnav__card--second" href="onboarding.html">
-    <h3 class="projectnav__title">Onboarding redesign</h3>
-    <span class="projectnav__cta">View Project</span>
+  <a class="upnext__card" href="onboarding.html">
+    <p class="upnext__eyebrow">Banco Next</p>
+    <h2 class="upnext__title">App onboarding redesign</h2>
   </a>
 </nav>
 
 <footer class="footer">Designed by Justina, built with Claude Design</footer>
-
-<script>
-  // Scroll reveal for .reveal elements (none marked by default; reserved)
-  const io = new IntersectionObserver((entries) => {
-    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('is-visible'); });
-  }, { threshold: 0.12 });
-  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
-</script>
 
 </body>
 </html>

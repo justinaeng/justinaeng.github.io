@@ -1,0 +1,186 @@
+/* Justina — case study system
+   Prose sits in a narrow measure; figures break out wider.
+   No !important anywhere: pages author markup to these classes.
+
+   measure : 680px   reading column — all prose and headings
+   figure  : 1120px  images break out past the text
+   media    : 1376px full-bleed bands
+   rhythm  : 24 / 48 / 96 / 128 / 176 */
+:root{
+  --ink:rgb(45,41,45);--muted:rgb(94,97,103);--bg:rgb(251,253,249);--paper:#fff;
+  --hair:rgba(45,41,45,.16);--mat:rgba(45,41,45,.04);--accent:rgb(242,220,91);
+  --measure:680px;--figure:1120px;--media:1376px;--gut:24px;
+  --sp-1:24px;--sp-2:48px;--sp-3:96px;--sp-4:128px;--sp-5:176px;--nav-h:64px;
+  --sans:"Maison Neue","Helvetica Neue",Helvetica,Arial,sans-serif;
+  --shadow:0 4px 20px rgba(38,38,38,.09);
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:19px;line-height:1.62;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;counter-reset:fig}
+img{display:block;max-width:100%;height:auto}
+a{color:inherit;text-decoration:none}
+a:hover{color:var(--ink)}
+p{margin:0 0 1.1em;text-wrap:pretty}
+p:last-child{margin-bottom:0}
+
+/* ── containers ── */
+.measure{width:100%;max-width:var(--measure);margin-inline:auto;padding-inline:var(--gut)}
+.frame{width:100%;max-width:var(--figure);margin-inline:auto;padding-inline:var(--gut)}
+.bleed{width:100%;max-width:var(--media);margin-inline:auto}
+
+/* ── nav ── */
+.nav{position:sticky;top:0;z-index:10;background:var(--bg)}
+.nav__inner{display:flex;align-items:center;justify-content:space-between;max-width:var(--figure);margin-inline:auto;padding:var(--sp-1) var(--gut)}
+.nav__home{position:relative;font-size:16px;font-weight:700}
+.nav__home::after{content:"";position:absolute;left:0;right:0;bottom:-6px;border-bottom:1px dashed var(--ink)}
+.nav__arrows{display:flex;gap:16px;font-size:18px;color:var(--muted)}
+.nav__arrows a:hover{color:var(--ink)}
+
+/* ── opening ── */
+.lede{padding:clamp(96px,13vw,var(--sp-5)) var(--gut) var(--sp-3)}
+.lede__title{margin:0 0 var(--sp-1);font-size:clamp(30px,3.6vw,42px);font-weight:700;line-height:1.14;letter-spacing:-.028em}
+.lede__sub{margin:0;font-size:19px;color:var(--muted)}
+
+/* ── metadata: one row, label over value ── */
+.meta{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--sp-1);align-items:start;margin:0;padding-top:var(--sp-1);border-top:1px solid var(--hair)}
+.meta dt{margin:0 0 4px;font-size:12px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.meta dd{margin:0;font-size:15px;font-weight:500;line-height:1.4}
+.meta+p{margin-top:var(--sp-2)}
+
+/* ── chapters ── */
+.chapter{padding-block:var(--sp-4)}
+.chapter+.chapter{padding-top:0}
+.chapter__title{margin:0 0 var(--sp-2);font-size:clamp(24px,2.6vw,30px);font-weight:700;line-height:1.16;letter-spacing:-.022em;scroll-margin-top:calc(var(--nav-h) + 32px)}
+.chapter__sub{margin:var(--sp-3) 0 var(--sp-1);font-size:18px;font-weight:700;line-height:1.3;letter-spacing:-.012em}
+
+/* ── figures ──
+   Every image is a <figure> with a <figcaption>; the caption carries
+   an auto-incrementing "Fig NN" so numbering never drifts. */
+figure{margin:var(--sp-3) 0 0}
+figcaption{counter-increment:fig;margin-top:var(--sp-1);font-size:14px;line-height:1.5;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+figcaption::before{content:"Fig " counter(fig,decimal-leading-zero) "  ";font-weight:700;color:var(--ink);font-variant-numeric:tabular-nums;white-space:pre}
+.shot{width:100%;border-radius:3px;background:var(--paper) center top/cover no-repeat;box-shadow:var(--shadow)}
+.shot--contain{background-size:contain;box-shadow:none}
+/* Each figure sets --ar from its own asset, so a contained image always
+   fills its box: style="--ar:2640/2048". A height ceiling keeps portrait
+   assets from spanning the frame — the box narrows instead of growing. */
+.shot{aspect-ratio:var(--ar,16/9);width:100%}
+/* Tiles sharing a row get ONE height so no tile leaves a void; they crop
+   rather than letterbox. Set --rowh on the row when the default is wrong. */
+.figrow--media{align-items:stretch}
+.figrow--media>.shot{aspect-ratio:auto;height:var(--rowh,440px);background-size:cover;background-position:top center}
+/* mixed-ratio rows: shared height, whole image, neutral mat */
+.figrow--fit>.shot{aspect-ratio:auto;height:var(--rowh,440px);background-color:var(--mat);background-size:contain;background-position:center;box-shadow:none}
+/* a lone portrait tile hugs its own ratio instead of slabbing the frame */
+.figrow--fit>.shot[style*="--ar"]{max-width:calc(var(--rowh,440px) * (var(--ar)));margin-inline:auto}
+
+/* figure groups */
+.figrow{display:grid;gap:var(--sp-2) var(--sp-1);margin-top:var(--sp-3)}
+figure>.figrow:first-child{margin-top:0}
+figcaption+.figrow,figcaption+.notes{margin-top:var(--sp-1)}
+.figrow--2{grid-template-columns:repeat(2,minmax(0,1fr))}
+.figrow--3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.figrow--4{grid-template-columns:repeat(4,minmax(0,1fr))}
+.figrow--split{grid-template-columns:minmax(0,2fr) minmax(0,1fr)}
+.figrow>figure{margin-top:0}
+
+/* annotation list beside a figure */
+.notes{display:grid;gap:var(--sp-1);margin:var(--sp-1) 0 0;padding:0;list-style:none}
+.notes li{display:grid;grid-template-columns:20px minmax(0,1fr);gap:12px;font-size:15px;line-height:1.5;color:var(--muted)}
+.notes svg{width:20px;height:20px;margin-top:2px}
+
+/* ── callout: a single number that matters ── */
+.callout{padding:var(--sp-2);background:var(--mat);border-radius:4px}
+.callout__figure{margin:0 0 8px;font-size:clamp(28px,3.2vw,36px);font-weight:700;line-height:1.1;letter-spacing:-.024em}
+.callout__body{margin:0;font-size:17px;color:var(--muted)}
+
+/* ── filter pill states ── */
+.states{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:var(--sp-1);margin-top:var(--sp-1)}
+.states__label{margin:0 0 8px;font-size:12px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.pill{display:inline-flex;align-items:center;gap:8px;padding:8px 14px;border:1px solid var(--hair);border-radius:999px;background:var(--paper);font-size:14px;font-weight:500}
+.pill--hover{background:var(--mat)}
+.pill--active{border-color:var(--ink)}
+.pill--selected{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.pill--disabled{opacity:.4}
+.pill__caret{width:0;height:0;border-left:4px solid transparent;border-right:4px solid transparent;border-top:5px solid currentColor}
+.pill__badge{display:inline-flex;align-items:center;justify-content:center;min-width:18px;height:18px;padding:0 5px;border-radius:999px;background:var(--ink);color:var(--bg);font-size:11px}
+
+/* ── credits ── */
+.credits{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:var(--sp-1);padding-top:var(--sp-1);border-top:1px solid var(--hair)}
+.credits h3{margin:0 0 6px;font-size:12px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.credits p{margin:0;font-size:15px;line-height:1.6;white-space:pre-line}
+
+/* ── company band ── */
+.company{display:flex;align-items:center;justify-content:center;height:clamp(200px,22vw,280px);background:var(--band,rgb(30,22,75))}
+.company img{width:min(56%,560px);max-height:52%;object-fit:contain}
+
+/* ── up next ── */
+.upnext{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:var(--sp-1)}
+.upnext__card{display:flex;flex-direction:column;justify-content:space-between;gap:var(--sp-3);padding:var(--sp-2);background:var(--mat);border-radius:4px;transition:background 180ms ease}
+.upnext__card:hover{background:rgba(45,41,45,.08)}
+.upnext__eyebrow{margin:0;font-size:12px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.upnext__title{margin:0;font-size:22px;font-weight:700;line-height:1.2;letter-spacing:-.018em}
+
+.footer{padding:var(--sp-3) var(--gut) var(--sp-2);text-align:center;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+
+@media (max-width:720px){
+  body{font-size:18px}
+  .chapter{padding-block:var(--sp-3)}
+  .figrow--2,.figrow--3,.figrow--4,.figrow--split{grid-template-columns:minmax(0,1fr)}
+  .meta{grid-template-columns:minmax(0,1fr);gap:var(--sp-1)}
+  figure{margin-top:var(--sp-2)}
+}
+
+/* ── step flow ── */
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:var(--sp-1);margin-top:var(--sp-2)}
+.step{display:flex;flex-direction:column;gap:10px;padding:var(--sp-1);background:var(--mat);border-radius:4px}
+.step img{width:24px;height:24px}
+.step h3{margin:0;font-size:16px;font-weight:700;line-height:1.25;letter-spacing:-.012em}
+.step p{margin:0;font-size:14px;line-height:1.5;color:var(--muted)}
+
+/* ── card grid: jobs-to-be-done, research themes ── */
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:var(--sp-1);margin-top:var(--sp-2)}
+.card{padding:var(--sp-1);background:var(--mat);border-radius:4px}
+.card h3{margin:0 0 8px;font-size:17px;font-weight:700;line-height:1.25;letter-spacing:-.014em}
+.card p{margin:0;font-size:15px;line-height:1.55;color:var(--muted)}
+.card hr{margin:12px 0;border:0;border-top:1px solid var(--hair)}
+.card__want{margin:0;font-size:16px;font-weight:500;line-height:1.4}
+.card__so{margin:0;font-size:15px;line-height:1.5;color:var(--muted)}
+
+/* ── solution with impact / effort rating ── */
+.solution{display:flex;flex-direction:column;gap:var(--sp-1);padding:var(--sp-1);background:var(--mat);border-radius:4px}
+.solution p{margin:0;font-size:15px;line-height:1.55}
+.rating{display:flex;gap:var(--sp-1);margin:0;font-size:11px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.rating>span{display:flex;align-items:center;gap:6px}
+.rating i{width:14px;height:4px;border-radius:2px;background:var(--hair)}
+.rating i.on{background:var(--ink)}
+
+/* ── pull quote between chapters ── */
+.pullquote{padding-block:var(--sp-3)}
+.pullquote p{margin:0;font-size:clamp(22px,2.4vw,26px);font-weight:700;line-height:1.32;letter-spacing:-.016em}
+
+/* ── numbered notes (design decisions under a figure) ── */
+.steps--numbered{counter-reset:note}
+.notes--numbered li{grid-template-columns:28px minmax(0,1fr)}
+.notes--numbered li::before{counter-increment:note;content:counter(note,decimal-leading-zero);font-size:13px;font-weight:700;color:var(--ink);font-variant-numeric:tabular-nums}
+
+/* ── in-progress placeholder ── */
+.lede__title em{font-style:italic}
+.status{display:inline-flex;align-items:center;gap:10px;margin-top:var(--sp-2);font-size:14px;color:var(--muted)}
+.status .pulse{width:8px;height:8px;border-radius:50%;background:rgb(0,150,170);box-shadow:0 0 0 0 rgba(0,150,170,.55);animation:pulse 2s infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(0,150,170,.55)}70%{box-shadow:0 0 0 10px rgba(0,150,170,0)}100%{box-shadow:0 0 0 0 rgba(0,150,170,0)}}
+@media (prefers-reduced-motion:reduce){.status .pulse{animation:none}}
+
+/* ── persona cards ── */
+.personas{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:var(--sp-1);margin-top:var(--sp-2)}
+.persona{display:flex;flex-direction:column;gap:14px;padding:var(--sp-1);background:var(--mat);border-radius:4px}
+.persona__portrait{width:96px;aspect-ratio:630/720;background:center/contain no-repeat}
+.persona__name{margin:0;font-size:18px;font-weight:700;letter-spacing:-.014em}
+.persona__role{margin:0;font-size:12px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.persona__quote{margin:0;font-size:16px;font-style:italic;line-height:1.45}
+.persona__tech{margin:0;padding:0;list-style:none;display:grid;gap:4px;font-size:14px;line-height:1.45;color:var(--muted)}
+.persona__tech dt{font-size:12px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:2px}
+.persona__tech dd{margin:0}
+/* tinted quote callout */
+.callout--quote{background:rgb(214,250,225)}
+.callout--quote p{margin:0;font-size:18px;font-style:italic;line-height:1.45}
