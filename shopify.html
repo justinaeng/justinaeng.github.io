@@ -10,6 +10,8 @@
 @font-face{font-family:"Maison Neue";src:url("assets/fonts/MaisonNeue-Medium.otf") format("opentype");font-weight:500;font-style:normal;font-display:swap}
 @font-face{font-family:"Maison Neue";src:url("assets/fonts/MaisonNeue-Demi.otf") format("opentype");font-weight:600;font-style:normal;font-display:swap}
 @font-face{font-family:"Maison Neue";src:url("assets/fonts/MaisonNeue-Bold.otf") format("opentype");font-weight:700;font-style:normal;font-display:swap}
+@font-face{font-family:"Maison Neue";src:url("assets/fonts/MaisonNeue-BoldItalic.otf") format("opentype");font-weight:700;font-style:italic;font-display:swap}
+@font-face{font-family:"Maison Neue";src:url("assets/fonts/MaisonNeue-MediumItalic.otf") format("opentype");font-weight:500;font-style:italic;font-display:swap}
 </style>
 <link rel="stylesheet" href="case-study.css"/>
 </head>
@@ -47,140 +49,45 @@
     </div>
     <figure class="frame">
       <div class="shot" style="--ar:2880/2048;background-image:url('assets/po-hero.png')" role="img" aria-label="Purchase order vision comp"></div>
-      <figcaption>Ideal-state purchase order experience</figcaption>
     </figure>
   </section>
 
-  <section class="chapter measure" aria-labelledby="flow">
+  <section class="chapter chapter--tight" aria-labelledby="flow">
     <h2 class="chapter__title" id="flow">Purchase order flow</h2>
-    <div class="steps">
-      <article class="step">
-        <img src="assets/Icon_OrderCreation.svg" alt=""/>
-        <h3>Place order</h3>
-        <p>Merchant requests products and/or raw materials from supplier</p>
-      </article>
-      <article class="step">
-        <img src="assets/Icon_ConfirmOrder.svg" alt=""/>
-        <h3>Order confirmation</h3>
-        <p>Supplier confirms the order and shares terms</p>
-      </article>
-      <article class="step">
-        <img src="assets/Icon_OrderInTransit.svg" alt=""/>
-        <h3>In transit</h3>
-        <p>Carrier ships the order toward the merchant</p>
-      </article>
-      <article class="step">
-        <img src="assets/Icon_ReceiveOrder.svg" alt=""/>
-        <h3>Receive</h3>
-        <p>Merchant receives shipment and updates inventory</p>
-      </article>
-      <article class="step">
-        <img src="assets/Icon_ReconcileOrder.svg" alt=""/>
-        <h3>Pay/Reconcile</h3>
-        <p>Match invoice, close out the order, and pay supplier</p>
-      </article>
+    <figure class="frame">
+      <div class="shot shot--contain" style="--ar:2976/1674;background-image:url('assets/shopify/procurement-lifecycle.png')" role="img" aria-label="Procurement lifecycle: inventory forecasting and planning, order and negotiate with supplier, track shipments and movements, receive and reconcile payments — with Shopify's level of support at each stage"></div>
+    </figure>
+  </section>
+
+  <section class="chapter" aria-label="Current state">
+    <div class="frame">
+      <figure>
+        <div class="shot shot--contain ph" data-ph="current-state.png" style="--ar:2976/1674;background-image:url('assets/shopify/current-state.png')" role="img" aria-label="Existing inventory, purchase orders index, and create purchase order screens"></div>
+        <figcaption class="cap--titled" data-label="Current state">Left: Purchase orders index, Right: Create purchase order</figcaption>
+      </figure>
     </div>
-    <h3 class="chapter__sub">Jobs to be done</h3>
-    <div class="cards">
-      <article class="card">
-        <p class="card__want">I want to create a purchase order quickly and accurately</p>
-        <hr/>
-        <p class="card__so">so I can avoid stockouts and sell continuously</p>
-      </article>
-      <article class="card">
-        <p class="card__want">I want to align on payment terms up front</p>
-        <hr/>
-        <p class="card__so">so I can manage cash flow with confidence</p>
-      </article>
-      <article class="card">
-        <p class="card__want">I want visibility into shipments in transit</p>
-        <hr/>
-        <p class="card__so">so I can plan receiving and set merchant expectations</p>
-      </article>
-      <article class="card">
-        <p class="card__want">I want to receive and reconcile inventory accurately</p>
-        <hr/>
-        <p class="card__so">so my on-hand counts stay trustworthy</p>
-      </article>
-      <article class="card">
-        <p class="card__want">I want to close orders with matching invoices</p>
-        <hr/>
-        <p class="card__so">so my books and my inventory agree</p>
-      </article>
+    <div class="measure">
+      <p>The index gives no high-level overview or general insights into orders and inventory, and there is no way to see or track payment status. Multi-shipment orders offer no transparency into transport status.</p>
+      <p>There are no recommendations on order quantities or bundling of popular products. Payment terms are limited, with no way to create a custom method, and merchants cannot email from the platform &mdash; they must export, attach, and send.</p>
     </div>
   </section>
 
   <section class="chapter measure" aria-labelledby="research">
     <h2 class="chapter__title" id="research">Merchant interviews</h2>
-    <p>Although there was a high-level product roadmap in place, I conducted UXR (~25 user interviews) to better understand merchant needs across a wide range of inventory complexities and industries. No matter what they sold &mdash; from party supplies to construction materials &mdash; merchants expressed the same frustrations and needs. The themes identified from this study led to stronger design solutions and concepts because they allow merchants to manage their bottom line effectively.</p>
-    <h3 class="chapter__sub">Research themes</h3>
-    <div class="cards">
-      <article class="card">
-        <h3>Build forecasting tools</h3>
+    <p>I interviewed ~25 merchants across a wide range of industries to understand the nuances of their inventory complexity needs.</p>
+    <div class="themes">
+      <section>
+        <h3>Forecast: Shift from reactive to <em>proactive</em> management</h3>
         <p>Current data limitations force merchants to be reactive instead of proactive, which can cause issues like stock-outs and brand reputation damage. We should make robust data insights accessible so merchants can effectively anticipate demand and restock in a timely manner.</p>
-      </article>
-      <article class="card">
-        <h3>Reduce duplicative actions</h3>
+      </section>
+      <section>
+        <h3>Streamline: Eliminate disjointed and redundant workflows</h3>
         <p>Merchants jump between Shopify, spreadsheets, and email just to send a single PO. Consolidating these actions inside one surface cuts repetitive steps, data re-entry, and the errors that come with them.</p>
-      </article>
-      <article class="card">
-        <h3>Bring financial transparency</h3>
+      </section>
+      <section>
+        <h3>Clarify: Accurately reflect payment statuses and progress</h3>
         <p>Payment status, balance due, and cash-flow context are scattered or missing entirely. Surfacing them in the PO experience helps both operations and finance teams manage obligations proactively.</p>
-      </article>
-    </div>
-    <h3 class="chapter__sub">Solutions</h3>
-    <div class="cards">
-      <article class="solution">
-        <p>A robust dashboard that provides an overview of inventory movements, and reports on purchasing patterns and cost.</p>
-        <p class="rating"><span>Impact <i class="on"></i><i class="on"></i><i class="on"></i></span><span>Effort <i class="on"></i><i class="on"></i><i></i></span></p>
-      </article>
-      <article class="solution">
-        <p>Low-stock alerts that notify the merchant to re-stock or potentially trigger automatic PO creation.</p>
-        <p class="rating"><span>Impact <i class="on"></i><i class="on"></i><i class="on"></i></span><span>Effort <i class="on"></i><i class="on"></i><i class="on"></i></span></p>
-      </article>
-      <article class="solution">
-        <p>In-platform email composer with attached PDF so merchants never leave the tab to send a PO.</p>
-        <p class="rating"><span>Impact <i class="on"></i><i class="on"></i><i class="on"></i></span><span>Effort <i class="on"></i><i class="on"></i><i></i></span></p>
-      </article>
-      <article class="solution">
-        <p>Supplier response-time signal using historical communication patterns.</p>
-        <p class="rating"><span>Impact <i class="on"></i><i class="on"></i><i></i></span><span>Effort <i class="on"></i><i></i><i></i></span></p>
-      </article>
-      <article class="solution">
-        <p>Payment status column at the index level so accounting can prioritize and act on balances.</p>
-        <p class="rating"><span>Impact <i class="on"></i><i class="on"></i><i class="on"></i></span><span>Effort <i class="on"></i><i class="on"></i><i></i></span></p>
-      </article>
-      <article class="solution">
-        <p>Cost summary redesign that separates incurred costs from payments made.</p>
-        <p class="rating"><span>Impact <i class="on"></i><i class="on"></i><i></i></span><span>Effort <i class="on"></i><i></i><i></i></span></p>
-      </article>
-    </div>
-  </section>
-
-  <section class="chapter" aria-labelledby="current">
-    <div class="measure">
-      <h2 class="chapter__title" id="current">Current state</h2>
-    </div>
-    <div class="frame">
-      <figure>
-        <div class="figrow figrow--2 figrow--fit" style="--rowh:340px">
-          <div class="shot" style="background-image:url('assets/og-po-index.png')" role="img" aria-label="Existing purchase orders index"></div>
-          <div class="shot" style="background-image:url('assets/og-create-po.png')" role="img" aria-label="Existing create purchase order screen"></div>
-        </div>
-        <figcaption>Purchase orders index &middot; create purchase order</figcaption>
-        <div class="figrow figrow--2">
-          <ul class="notes">
-            <li><span aria-hidden="true">&mdash;</span><p>Lack of high-level overview or general insights into orders &amp; inventory</p></li>
-            <li><span aria-hidden="true">&mdash;</span><p>No way to see or track payment status</p></li>
-            <li><span aria-hidden="true">&mdash;</span><p>Lack of transparency into transport status for multi-shipment orders</p></li>
-          </ul>
-          <ul class="notes">
-            <li><span aria-hidden="true">&mdash;</span><p>No recommendations on order quantities or bundling of popular products</p></li>
-            <li><span aria-hidden="true">&mdash;</span><p>Limited options for payment terms, and no way to create a custom method</p></li>
-            <li><span aria-hidden="true">&mdash;</span><p>No way to email from the platform &mdash; merchants must export, attach, and send</p></li>
-          </ul>
-        </div>
-      </figure>
+      </section>
     </div>
   </section>
 
@@ -192,43 +99,29 @@
     <div class="measure">
       <h2 class="chapter__title" id="forecasting">Forecasting</h2>
       <p>Empower merchants with high-level metrics and insights so they can optimize their daily workflows and tasks.</p>
+      <p>High-level metrics cards provide a daily or weekly snapshot of inventory and sales. An inventory status column displays robust metrics on all inventory items so merchants can plan their orders more effectively.</p>
+      <p>AI assistant that calculates and recommends re-order quantities based on industry-standard formulas.</p>
     </div>
     <div class="frame">
       <figure>
         <div class="shot" style="--ar:2880/2048;background-image:url('assets/forecast-01.png')" role="img" aria-label="Forecasting dashboard with metrics cards"></div>
         <figcaption>Metrics cards and an inventory status column</figcaption>
-        <div class="figrow figrow--2">
-          <ul class="notes">
-            <li><span aria-hidden="true">&mdash;</span><p><strong>High-level metrics cards.</strong> Provide a daily or weekly snapshot of their inventory and sales.</p></li>
-          </ul>
-          <ul class="notes">
-            <li><span aria-hidden="true">&mdash;</span><p><strong>Inventory status column.</strong> Display robust metrics on all inventory items so merchants can plan their orders more effectively.</p></li>
-          </ul>
-        </div>
       </figure>
       <figure>
         <div class="shot" style="--ar:2400/2048;background-image:url('assets/forecast-02.png')" role="img" aria-label="AI-powered reorder recommendations"></div>
         <figcaption>AI-powered reorder recommendations</figcaption>
-        <ul class="notes">
-          <li><span aria-hidden="true">&mdash;</span><p>AI assistant that calculates and recommends re-order quantities based on industry-standard formulas.</p></li>
-        </ul>
       </figure>
     </div>
   </section>
 
   <section class="chapter" aria-labelledby="reduce">
     <div class="measure">
-      <h2 class="chapter__title" id="reduce">Reduce duplicative actions</h2>
+      <h2 class="chapter__title" id="reduce">Streamline workflows</h2>
     </div>
     <div class="frame">
       <figure>
         <div class="shot" style="--ar:2400/2048;background-image:url('assets/email-01.png')" role="img" aria-label="In-platform email composer for sending a purchase order"></div>
         <figcaption>Emailing a supplier without leaving the platform</figcaption>
-        <ul class="notes notes--numbered">
-          <li><p>Make &ldquo;Email supplier&rdquo; a primary CTA because that will always be the merchant&rsquo;s next step. The &ldquo;Save&rdquo; button lets them return to a draft later.</p></li>
-          <li><p>Generate a PDF of the purchase order that is attached to the email and enable a preview mode.</p></li>
-          <li><p>Confirm the email was sent successfully &mdash; assuming we have the supplier&rsquo;s historical purchase data, we can surface an average response time.</p></li>
-        </ul>
       </figure>
     </div>
   </section>
