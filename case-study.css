@@ -299,3 +299,19 @@ image-slot{display:block;width:100%;height:auto;aspect-ratio:var(--ar,16/9);bord
 .ph{background-image:none!important;background-color:var(--mat);border:1px dashed rgba(45,41,45,.3);border-radius:3px;box-shadow:none;display:flex;align-items:center;justify-content:center;padding:8px;overflow:hidden}
 .ph::after{content:attr(data-ph);font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;line-height:1.35;color:var(--muted);text-align:center;word-break:break-word}
 .persona__portrait.ph::after{font-size:10px}
+
+/* ══ global nav on case studies ══
+   Case studies carry the same site-wide links as the home and resume pages;
+   the prev/next arrows sit beside them rather than replacing them. */
+.nav__end{display:flex;align-items:center;gap:clamp(16px,2.5vw,32px)}
+.nav__right{display:flex;gap:20px;font-size:14px;color:var(--muted)}
+.nav__right a{position:relative;padding-bottom:4px}
+.nav__right a:hover::after{content:"";position:absolute;inset:auto 0 -2px 0;border-bottom:1px dashed var(--ink)}
+@media (max-width:720px){
+  .nav__right{gap:14px;font-size:13px}
+  .nav__end{gap:14px}
+  /* the prev/next arrows drop out — the Up next cards at the foot of every
+     case study already carry that move, and the four links need the width */
+  .nav__arrows{display:none}
+}
+@media (max-width:400px){.nav__right{gap:11px;font-size:12px}}
