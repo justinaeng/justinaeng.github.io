@@ -57,7 +57,7 @@ body>article>*+*{margin-top:var(--bl-5)}
 /* sections inherit the parent columns, so children share its left rail */
 .chapter{display:grid;grid-template-columns:subgrid;grid-column:1/-1;row-gap:var(--bl-2)}
 .chapter>*{grid-column:1/span 7;min-width:0}
-.chapter>.frame,.chapter>figure.frame,.chapter>.bleed,.chapter>.flow{grid-column:1/-1}
+.chapter>.frame,.chapter>figure.frame,.chapter>.bleed,.chapter>.flow,.chapter>.aside{grid-column:1/-1}
 
 /* column spans — same names as before, now grid roles instead of centered boxes */
 .measure{grid-column:1/span 7;min-width:0}
@@ -80,13 +80,14 @@ body.grid-on>article::before{content:"";position:absolute;inset:0 var(--pad);dis
 .nav__inner{display:flex;align-items:center;justify-content:space-between;max-width:var(--grid-max);margin-inline:auto;padding:var(--bl-1) var(--pad)}
 .nav__home{position:relative;font-size:16px;font-weight:700}
 .nav__home::after{content:"";position:absolute;left:0;right:0;bottom:-6px;border-bottom:1px dashed var(--ink)}
-.nav__arrows{display:flex;gap:16px;font-size:18px;color:var(--muted)}
-.nav__arrows a:hover{color:var(--ink)}
+.nav__right{display:flex;gap:20px;font-size:14px;color:var(--muted)}
+.nav__right a{position:relative;padding-bottom:4px}
+.nav__right a:hover::after{content:"";position:absolute;inset:auto 0 -2px 0;border-bottom:1px dashed var(--ink)}
 
 /* ══ opening ══ */
 .lede{padding-block:var(--bl-5) 0}
 body>article>.lede{margin-top:0}
-.lede__title{margin:0 0 var(--bl-1);font-size:clamp(30px,3.6vw,42px);line-height:clamp(38px,4.2vw,48px);font-weight:700;letter-spacing:-.028em;text-wrap:pretty}
+.lede__title{margin:0 0 var(--bl-1);font-size:clamp(30px,3.6vw,42px);line-height:clamp(40px,4.7vw,56px);font-weight:400;letter-spacing:-.028em;text-wrap:pretty}
 .lede__sub{margin:0;font-size:19px;color:var(--muted)}
 .lede__title em{font-style:italic}
 
@@ -219,6 +220,7 @@ body>article>.company{margin-top:var(--bl-4)}
 
 /* ══ personas ══ */
 .personas{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:var(--gut);margin-top:var(--bl-2)}
+.chapter>.personas{grid-column:1/-1}
 .persona{display:flex;flex-direction:column;gap:14px;padding:var(--bl-1);background:var(--mat);border-radius:4px}
 .persona__portrait{width:96px;aspect-ratio:630/720;background:center/contain no-repeat}
 .persona__name{margin:0;font-size:18px;font-weight:700;letter-spacing:-.014em}
@@ -269,10 +271,30 @@ image-slot{display:block;width:100%;height:auto;aspect-ratio:var(--ar,16/9);bord
 .themes h3{margin:0 0 8px;font-size:17px;font-weight:700;line-height:1.3;letter-spacing:-.014em}
 .themes p{margin:0;line-height:1.6842}
 
+/* ══ template blocks ══ */
+/* detail: a cropped component centered on a mat, replaces callout-heavy comps */
+.detail{display:flex;align-items:center;justify-content:center;aspect-ratio:var(--ar,16/9);padding:clamp(24px,6%,80px);background:var(--mat);border-radius:3px}
+.detail>*{width:100%;max-width:var(--inner,640px)}
+/* devices: phone screens in a row on a mat; wraps to 2-up on small screens */
+.devices{display:grid;grid-template-columns:repeat(var(--n,3),minmax(0,1fr));gap:var(--gut);padding:clamp(24px,5%,64px);background:var(--mat);border-radius:3px}
+.devices>*{aspect-ratio:var(--ar,390/844);border-radius:12px;box-shadow:var(--shadow)}
+/* aside: prose on cols 1–4, figure on cols 5–12 */
+.aside{display:grid;grid-template-columns:subgrid;grid-column:1/-1;align-items:start;row-gap:var(--bl-1)}
+.aside__text{grid-column:1/span 4}
+.aside__text h3{margin:0 0 8px;font-size:17px;font-weight:700;line-height:1.3;letter-spacing:-.014em}
+.aside__text p{font-size:15px;line-height:1.6;color:var(--muted)}
+.aside>figure{grid-column:5/-1}
+.aside--flip .aside__text{grid-column:9/-1;grid-row:1}
+.aside--flip>figure{grid-column:1/span 8;grid-row:1}
+/* scroll: wide diagrams keep legible type on phones by scrolling sideways */
+.scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.scroll>*{min-width:var(--min,720px)}
+
 /* ══ responsive: the grid narrows, then collapses ══ */
 @media (max-width:1080px){
   :root{--grid-max:100%;--pad:32px}
   .chapter>*,.measure,.chapter.measure>*{grid-column:1/span 8}
+  .chapter>.aside{grid-column:1/-1}
   .pullquote{grid-column:1/span 10}
   .flow{grid-template-columns:repeat(3,minmax(0,1fr));grid-template-rows:auto auto auto auto auto auto}
   .flow__stage img{width:64px;height:64px}
@@ -280,38 +302,14 @@ image-slot{display:block;width:100%;height:auto;aspect-ratio:var(--ar,16/9);bord
 @media (max-width:900px){
   .flow{grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:repeat(9,auto)}
   .chapter>*,.measure,.chapter.measure>*,.pullquote{grid-column:1/-1}
+  .chapter>.aside{grid-column:1/-1}
 }@media (max-width:720px){
   :root{--pad:24px;--bl-5:128px;--bl-4:96px;--bl-3:64px}
   body{font-size:18px;line-height:1.6667}
   .meta{grid-template-columns:minmax(0,1fr);gap:var(--bl-1)}
   .figrow--2,.figrow--3,.figrow--4,.figrow--split{grid-template-columns:minmax(0,1fr)}
   figcaption{white-space:normal}
+  .devices{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .aside__text,.aside>figure,.aside--flip .aside__text,.aside--flip>figure{grid-column:1/-1;grid-row:auto}
 }
 @media (max-width:560px){.flow{grid-template-columns:minmax(0,1fr);grid-template-rows:repeat(15,auto)}}
-
-/* ══ missing-asset placeholder ══
-   Mark any image block whose file is not in the repo yet:
-     class="… ph"  data-ph="filename.png"
-   The element keeps its own sizing (--ar, aspect-ratio, width) and its
-   original background-image url stays in the style attribute, so dropping
-   the real file into assets/ and deleting the `ph` class and the `data-ph`
-   attribute restores it. Nothing else changes. */
-.ph{background-image:none!important;background-color:var(--mat);border:1px dashed rgba(45,41,45,.3);border-radius:3px;box-shadow:none;display:flex;align-items:center;justify-content:center;padding:8px;overflow:hidden}
-.ph::after{content:attr(data-ph);font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;line-height:1.35;color:var(--muted);text-align:center;word-break:break-word}
-.persona__portrait.ph::after{font-size:10px}
-
-/* ══ global nav on case studies ══
-   Case studies carry the same site-wide links as the home and resume pages;
-   the prev/next arrows sit beside them rather than replacing them. */
-.nav__end{display:flex;align-items:center;gap:clamp(16px,2.5vw,32px)}
-.nav__right{display:flex;gap:20px;font-size:14px;color:var(--muted)}
-.nav__right a{position:relative;padding-bottom:4px}
-.nav__right a:hover::after{content:"";position:absolute;inset:auto 0 -2px 0;border-bottom:1px dashed var(--ink)}
-@media (max-width:720px){
-  .nav__right{gap:14px;font-size:13px}
-  .nav__end{gap:14px}
-  /* the prev/next arrows drop out — the Up next cards at the foot of every
-     case study already carry that move, and the four links need the width */
-  .nav__arrows{display:none}
-}
-@media (max-width:400px){.nav__right{gap:11px;font-size:12px}}
